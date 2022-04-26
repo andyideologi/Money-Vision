@@ -40,6 +40,19 @@ class NetWorking {
     return response.reasonPhrase.toString();
   }
 
+  Future<String> getServices() async{
+    var request = http.MultipartRequest('POST', Uri.parse('https://fleenks.com/mv/api/fr-services-list'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return await response.stream.bytesToString();
+    }
+    else {
+      return response.reasonPhrase.toString();
+    }
+  }
+
   Future<String> forgetPassword() async {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://fleenks.com/mv/api/fr-forgot-password'));
