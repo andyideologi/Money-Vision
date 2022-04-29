@@ -4,66 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:franchise/utils/constants.dart';
 
 class CustomDropDown extends StatefulWidget {
-  CustomDropDown({Key? key}) : super(key: key);
+  CustomDropDown({Key? key, required this.items}) : super(key: key);
+  final List<ExpansionItem> items;
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
-  List<ExpansionItem> items = [
-    ExpansionItem(
-        id: 1,
-        icon: Icon(Icons.person),
-        header: "Header 1",
-        body:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu."),
-    ExpansionItem(
-        id: 2,
-        icon: Icon(Icons.info),
-        header: "Header 2",
-        body:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu."),
-    ExpansionItem(
-        id: 3,
-        icon: Icon(Icons.lock),
-        header: "Header 3",
-        body:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu."),
-    ExpansionItem(
-        id: 4,
-        icon: Icon(Icons.logout),
-        header: "Header 4",
-        body:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu."),
-  ];
-
-  List<ExpansionItem> headerOneItems = [
-     ExpansionItem(
-        id: 1,
-        icon: Icon(Icons.search),
-        header: "Header 1",
-        body:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu."),
-    ExpansionItem(
-        id: 2,
-        icon: Icon(Icons.place_outlined),
-        header: "Header 2",
-        body:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu."),
-    ExpansionItem(
-        id: 3,
-        icon: Icon(Icons.video_call),
-        header: "Header 3",
-        body:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu."),
-    ExpansionItem(
-        id: 4,
-        icon: Icon(Icons.plus_one),
-        header: "Header 4",
-        body:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu."),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -74,15 +22,15 @@ class _CustomDropDownState extends State<CustomDropDown> {
       dividerColor: Colors.transparent,
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
-          items[index].isExpanded = !items[index].isExpanded;
-          for (int i = 0; i < items.length; i++) {
+          widget.items[index].isExpanded = !widget.items[index].isExpanded;
+          for (int i = 0; i < widget.items.length; i++) {
             if (i != index) {
-              items[i].isExpanded = false;
+              widget.items[i].isExpanded = false;
             }
           }
         });
       },
-      children: items.map((ExpansionItem item) {
+      children: widget.items.map((ExpansionItem item) {
         return ExpansionPanel(
             backgroundColor: Colors.transparent,
             isExpanded: item.isExpanded,
@@ -94,7 +42,6 @@ class _CustomDropDownState extends State<CustomDropDown> {
                 ),
                 padding: EdgeInsets.all(8),
                 child: Row(children: [
-                  item.icon,
                   SizedBox(
                     width: 20,
                   ),
@@ -105,30 +52,21 @@ class _CustomDropDownState extends State<CustomDropDown> {
                 ]),
               );
             },
-            body: item.id != 1
-                ? Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      item.body,
-                      textAlign: TextAlign.justify,
-                      style: poppinFonts(Colors.black, FontWeight.normal, 15),
-                    ),
-                  )
-                : SizedBox(
+            body:SizedBox(
                   child: ExpansionPanelList(
                       elevation: 0,
                       dividerColor: Colors.transparent,
-                        expansionCallback: (int index, bool isExpanded) {
+                        expansionCallback: (int indexi, bool isExpanded) {
                         setState(() {
-                          headerOneItems[index].isExpanded = !headerOneItems[index].isExpanded;
-                          for (int i = 0; i < headerOneItems.length; i++) {
-                            if (i != index) {
-                              headerOneItems[i].isExpanded = false;
+                          item.body[indexi].isExpanded = !item.body[indexi].isExpanded;
+                          for (int i = 0; i < item.body.length; i++) {
+                            if (i != indexi) {
+                              item.body[i].isExpanded = false;
                             }
                           }
                         });
                       },
-                      children: headerOneItems.map((ExpansionItem element){
+                      children: item.body.map((ExpansionService element){
                           return ExpansionPanel(
                           backgroundColor: Colors.transparent,
                           isExpanded: element.isExpanded,
@@ -140,40 +78,33 @@ class _CustomDropDownState extends State<CustomDropDown> {
                                 ),
                                 padding: EdgeInsets.all(8),
                                 child: Row(children: [
-                                  element.icon,
                                   SizedBox(
                                     width: 20,
                                   ),
                                   Text(
                                     element.header,
-                                    style: poppinFonts(
-                                        Colors.black, FontWeight.normal, 15),
+                                    style: poppinFonts(Colors.black, FontWeight.normal, 15),
                                   ),
                                 ]),
                               );
                           }, body: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 35),
-                              child: Text(
-                                element.body,
-                                textAlign: TextAlign.justify,
-                                style: poppinFonts(
-                                    Colors.black, FontWeight.normal, 15),
-                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 50),
+                              child: Text(element.body),
                             ));
                       }).toList(),
                   ),
                 )                
                 );
       }).toList(),
-    ));
+    )
+    );
   }
 }
 
 class ExpansionItem {
   bool isExpanded;
   final String header;
-  final String body;
-  final Icon icon;
+  final List<ExpansionService> body;
   final int id;
 
   ExpansionItem(
@@ -181,5 +112,19 @@ class ExpansionItem {
       required this.header,
       required this.id,
       required this.body,
-      required this.icon});
+      });
+}
+
+class ExpansionService {
+  bool isExpanded;
+  final String header;
+  final String body;
+  final int id;
+
+  ExpansionService(
+      {this.isExpanded = false,
+        required this.header,
+        required this.id,
+        required this.body,
+      });
 }
