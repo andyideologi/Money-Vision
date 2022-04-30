@@ -29,7 +29,18 @@ class _ProfileState extends State<Profile> {
   late List<dynamic> m;
   late String filespath;
   PickedFile? profileImage;
+  var _currencies = [
+    "A+",
+    "A-",
+    "B+",
+    "B-",
+    "O+",
+    "O-",
+    "AB+",
+    "AB-",
+  ];
 
+  String _currentSelectedValue = '';
   Color onPressColor = const Color(0xFFd00657).withOpacity(0.7);
   Color buttonColor = const Color(0xFFd00657);
 
@@ -204,8 +215,10 @@ class _ProfileState extends State<Profile> {
                       boxShadow: kBoxShadows),
                   child: CircleAvatar(
                     radius: 80.0,
-                    backgroundImage: NetworkImage("https://fleenks.com/mv/" +
-                        Data.map['photo_path'].toString()),
+                    backgroundImage: profileImage == null
+                        ? NetworkImage("https://fleenks.com/mv/" +
+                            Data.map['photo_path'].toString())
+                        : FileImage(File(profileImage!.path)) as ImageProvider,
                   ),
                 ),
                 Padding(
@@ -219,184 +232,228 @@ class _ProfileState extends State<Profile> {
                   height: 40,
                 ),
                 Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      onTap: () async {
-                        tap = true;
-                        NetWorking netWorking =
-                            NetWorking(password: '', phoneNumber: '');
-                        await netWorking
-                            .getProfileDetails(Data.map['id'].toString())
-                            .then((value) {
-                          Map<String, dynamic> data = jsonDecode(value);
-                          print(data.toString());
-                          filespath = data['files_path'];
-                          m = data['profile_obj'];
-                          emailController.text = m[0]['pers_email'];
-                          locationController.text = m[0]['location'];
-                          bloodController.text = m[0]['blood_group'];
-                          mobileController.text = m[0]['sec_mobile'];
-                        });
-                        showProfileDetails();
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Icon(Icons.person)),
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'My Profile',
-                                style: TextStyle(fontSize: 17),
-                              ))
-                        ],
-                      ),
-                    )),
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                          style: ButtonStyle(
+                              shadowColor:
+                                  MaterialStateProperty.all(Colors.amberAccent),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              overlayColor: MaterialStateProperty.all(
+                                  Colors.grey.withOpacity(0.5))),
+                          onPressed: () async {
+                            tap = true;
+                            NetWorking netWorking =
+                                NetWorking(password: '', phoneNumber: '');
+                            await netWorking
+                                .getProfileDetails(Data.map['id'].toString())
+                                .then((value) {
+                              Map<String, dynamic> data = jsonDecode(value);
+                              print(data.toString());
+                              filespath = data['files_path'];
+                              m = data['profile_obj'];
+                              emailController.text = m[0]['pers_email'];
+                              locationController.text = m[0]['location'];
+                              bloodController.text = m[0]['blood_group'];
+                              mobileController.text = m[0]['sec_mobile'];
+                            });
+                            showProfileDetails();
+                          },
+                          icon: Icon(Icons.person),
+                          label: Text('My Profile',
+                              style: TextStyle(fontSize: 17))),
+                    ],
+                  ),
+                ),
                 Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      onTap: () async {
-                        if (!tap) {
-                          NetWorking netWorking =
-                              NetWorking(password: '', phoneNumber: '');
-                          await netWorking
-                              .getProfileDetails(Data.map['id'].toString())
-                              .then((value) {
-                            Map<String, dynamic> data = jsonDecode(value);
-                            print(data.toString());
-                            filespath = data['files_path'];
-                            m = data['profile_obj'];
-                            emailController.text = m[0]['pers_email'];
-                            locationController.text = m[0]['location'];
-                            bloodController.text = m[0]['blood_group'];
-                            mobileController.text = m[0]['sec_mobile'];
-                          });
-                        }
-                        updateProfileDetails();
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Icon(Icons.person)),
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'Update Profile',
-                                style: TextStyle(fontSize: 17),
-                              ))
-                        ],
-                      ),
-                    )),
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                          style: ButtonStyle(
+                              shadowColor:
+                                  MaterialStateProperty.all(Colors.amberAccent),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              overlayColor: MaterialStateProperty.all(
+                                  Colors.grey.withOpacity(0.5))),
+                          onPressed: () async {
+                            if (!tap) {
+                              NetWorking netWorking =
+                                  NetWorking(password: '', phoneNumber: '');
+                              await netWorking
+                                  .getProfileDetails(Data.map['id'].toString())
+                                  .then((value) {
+                                Map<String, dynamic> data = jsonDecode(value);
+                                print(data.toString());
+                                filespath = data['files_path'];
+                                m = data['profile_obj'];
+                                emailController.text = m[0]['pers_email'];
+                                locationController.text = m[0]['location'];
+                                _currentSelectedValue = m[0]['blood_group'];
+                                mobileController.text = m[0]['sec_mobile'];
+                              });
+                            }
+                            updateProfileDetails();
+                            setState(() {});
+                          },
+                          icon: Icon(Icons.person),
+                          label: Text('Update Profile',
+                              style: TextStyle(fontSize: 17))),
+                    ],
+                  ),
+                ),
                 Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Icon(Icons.info)),
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'About us',
-                                style: TextStyle(fontSize: 17),
-                              ))
-                        ],
-                      ),
-                    )),
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                          style: ButtonStyle(
+                              shadowColor:
+                                  MaterialStateProperty.all(Colors.amberAccent),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              overlayColor: MaterialStateProperty.all(
+                                  Colors.grey.withOpacity(0.5))),
+                          onPressed: () {},
+                          icon: Icon(Icons.info),
+                          label:
+                              Text('About us', style: TextStyle(fontSize: 17))),
+                    ],
+                  ),
+                ),
                 Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        DisplayChangePasswordDialog(context);
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Icon(Icons.lock)),
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'Change Password',
-                                style: TextStyle(fontSize: 17),
-                              ))
-                        ],
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                        style: ButtonStyle(
+                            shadowColor:
+                                MaterialStateProperty.all(Colors.amberAccent),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.black),
+                            overlayColor: MaterialStateProperty.all(
+                                Colors.grey.withOpacity(0.5))),
+                        onPressed: () {
+                          DisplayChangePasswordDialog(context);
+                        },
+                        icon: Icon(Icons.lock),
+                        label: Text(
+                          'Change Password',
+                          style: TextStyle(fontSize: 17),
+                        ),
                       ),
-                    )),
+                    ],
+                  ),
+                ),
                 Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        displayDialog(context);
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Icon(Icons.login)),
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'Logout',
-                                style: TextStyle(fontSize: 17),
-                              ))
-                        ],
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                        style: ButtonStyle(
+                            shadowColor:
+                                MaterialStateProperty.all(Colors.amberAccent),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.black),
+                            overlayColor: MaterialStateProperty.all(
+                                Colors.grey.withOpacity(0.5))),
+                        onPressed: () {
+                          displayDialog(context);
+                        },
+                        icon: Icon(Icons.login),
+                        label: Text(
+                          'Logout',
+                          style: TextStyle(fontSize: 17),
+                        ),
                       ),
-                    )),
+                    ],
+                  ),
+                ),
                 Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Icon(Icons.password)),
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'Check Password',
-                                style: TextStyle(fontSize: 17),
-                              ))
-                        ],
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                        style: ButtonStyle(
+                            shadowColor:
+                                MaterialStateProperty.all(Colors.amberAccent),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.black),
+                            overlayColor: MaterialStateProperty.all(
+                                Colors.grey.withOpacity(0.5))),
+                        onPressed: () {},
+                        icon: Icon(Icons.password),
+                        label: Text(
+                          'Check Password',
+                          style: TextStyle(fontSize: 17),
+                        ),
                       ),
-                    )),
+                    ],
+                  ),
+                ),
                 Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Icon(Icons.share)),
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'Share our App',
-                                style: TextStyle(fontSize: 17),
-                              ))
-                        ],
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                        style: ButtonStyle(
+                            shadowColor:
+                                MaterialStateProperty.all(Colors.amberAccent),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.black),
+                            overlayColor: MaterialStateProperty.all(
+                                Colors.grey.withOpacity(0.5))),
+                        onPressed: () {},
+                        icon: Icon(Icons.share),
+                        label: Text(
+                          'Share our App',
+                          style: TextStyle(fontSize: 17),
+                        ),
                       ),
-                    )),
+                    ],
+                  ),
+                ),
                 Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Icon(Icons.contact_support)),
-                          Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'Contact us',
-                                style: TextStyle(fontSize: 17),
-                              ))
-                        ],
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                        style: ButtonStyle(
+                            shadowColor:
+                                MaterialStateProperty.all(Colors.amberAccent),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.black),
+                            overlayColor: MaterialStateProperty.all(
+                                Colors.grey.withOpacity(0.5))),
+                        onPressed: () {},
+                        icon: Icon(Icons.contact_support),
+                        label: Text(
+                          'Contact us',
+                          style: TextStyle(fontSize: 17),
+                        ),
                       ),
-                    )),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: 40,
                 ),
@@ -1363,196 +1420,277 @@ class _ProfileState extends State<Profile> {
 
   void updateProfileDetails() {
     Size size = MediaQuery.of(context).size;
+    bool _isLoading = false;
     showDialog(
         context: context,
         builder: (BuildContext context) => StatefulBuilder(
               builder: (context, setState) => AlertDialog(
-                  title: Text("Update Profile"),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: TextFormField(
-                            controller: emailController,
-                            decoration: const InputDecoration(
-                              labelText: "Email",
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w100),
-                              // suffixIcon: _clearIconButton(_passwordController),
-                              prefixStyle:
-                                  TextStyle(color: Colors.black, fontSize: 10),
-                            ),
-                            validator: (value) {
-                              return null;
+                      Text("Update Profile"),
+                      if (!_isLoading)
+                        IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
                             },
-                            onChanged: (_) {
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: TextFormField(
-                            controller: locationController,
-                            decoration: const InputDecoration(
-                              labelText: "Location",
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w100),
-                              // suffixIcon: _clearIconButton(_passwordController),
-                              prefixStyle:
-                                  TextStyle(color: Colors.black, fontSize: 10),
-                            ),
-                            validator: (value) {
-                              return null;
-                            },
-                            onChanged: (_) {
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: TextFormField(
-                            controller: mobileController,
-                            decoration: const InputDecoration(
-                              labelText: "Alternate Mobile",
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w100),
-                              // suffixIcon: _clearIconButton(_passwordController),
-                              prefixStyle:
-                                  TextStyle(color: Colors.black, fontSize: 10),
-                            ),
-                            validator: (value) {
-                              return null;
-                            },
-                            onChanged: (_) {
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: TextFormField(
-                            controller: bloodController,
-                            decoration: const InputDecoration(
-                              labelText: "Blood Group",
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w100),
-                              // suffixIcon: _clearIconButton(_passwordController),
-                              prefixStyle:
-                                  TextStyle(color: Colors.black, fontSize: 10),
-                            ),
-                            validator: (value) {
-                              return null;
-                            },
-                            onChanged: (_) {
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: kBoxShadows),
-                        child: CircleAvatar(
-                          radius: 80.0,
-                          backgroundImage: profileImage == null
-                              ? NetworkImage("https://fleenks.com/mv/" +
-                                  Data.map['photo_path'].toString())
-                              : FileImage(File(profileImage!.path))
-                                  as ImageProvider,
-                        ),
-                      ),
-                      GestureDetector(
-                          onTap: () async {
-                            final ImagePicker _picker = ImagePicker();
-                            final PickedFile? image = await _picker.getImage(
-                                source: ImageSource.gallery,
-                                maxWidth: 1024,
-                                maxHeight: 768);
-                            setState(() {
-                              profileImage = image;
-                            });
-                            print(image);
-                          },
-                          child: Text(
-                            'Select Image',
-                            style: TextStyle(color: Colors.blue),
-                          )),
-                      Padding(
-                          padding: EdgeInsets.all(25),
-                          child: GestureDetector(
-                            child: Container(
-                              width: size.width / 1.5,
-                              height: size.height / 15,
-                              decoration: BoxDecoration(
-                                  color: press ? onPressColor : buttonColor,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: kBoxShadows),
-                              child: Center(
-                                child: Text(
-                                  "Update",
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: size.width / 22,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                            icon: Icon(Icons.cancel)),
+                    ],
+                  ),
+                  content: _isLoading
+                      ? Text(
+                          'Updating...',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.green),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            // mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: TextFormField(
+                                    controller: emailController,
+                                    decoration: const InputDecoration(
+                                      labelText: "My Email *",
+                                      labelStyle: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w100),
+                                      // suffixIcon: _clearIconButton(_passwordController),
+                                      prefixStyle: TextStyle(
+                                          color: Colors.black, fontSize: 10),
+                                    ),
+                                    validator: (value) {
+                                      return null;
+                                    },
+                                    onChanged: (_) {
+                                      setState(() {});
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
-                            onTap: () async {
-                              setState(() {
-                                press = !press;
-                              });
-                              FocusScope.of(context).unfocus();
-                              Uint8List imagebytes =
-                                  await File(profileImage!.path)
-                                      .readAsBytes(); //convert to bytes
-                              String base64Image = base64.encode(imagebytes);
-                              NetWorking apiObj =
-                                  NetWorking(password: '', phoneNumber: '');
-                              await apiObj
-                                  .updateDetails(
-                                      Data.map['id'].toString(),
-                                      emailController.text,
-                                      locationController.text,
-                                      mobileController.text,
-                                      bloodController.text,
-                                      base64Image)
-                                  .then((value) async {
-                                Map valueMap = jsonDecode(value);
-                                final snackBar = SnackBar(
-                                    content: Text(valueMap['message']));
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              });
-                            },
-                          ))
-                    ],
-                  )),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: TextFormField(
+                                    controller: locationController,
+                                    decoration: const InputDecoration(
+                                      labelText: "Location *",
+                                      labelStyle: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w100),
+                                      // suffixIcon: _clearIconButton(_passwordController),
+                                      prefixStyle: TextStyle(
+                                          color: Colors.black, fontSize: 10),
+                                    ),
+                                    validator: (value) {
+                                      return null;
+                                    },
+                                    onChanged: (_) {
+                                      setState(() {});
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: TextFormField(
+                                    controller: mobileController,
+                                    decoration: const InputDecoration(
+                                      labelText: "Alternate Mobile",
+                                      labelStyle: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w100),
+                                      // suffixIcon: _clearIconButton(_passwordController),
+                                      prefixStyle: TextStyle(
+                                          color: Colors.black, fontSize: 10),
+                                    ),
+                                    validator: (value) {
+                                      return null;
+                                    },
+                                    onChanged: (_) {
+                                      setState(() {});
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15.0, top: 8),
+                                    child: Text(
+                                      'Selected Blood Group',
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15.0, bottom: 15.0),
+                                child: FormField<String>(
+                                  builder: (FormFieldState<String> state) {
+                                    return InputDecorator(
+                                      decoration: InputDecoration(
+                                        // labelStyle: textStyle,
+                                        errorStyle: TextStyle(
+                                            color: Colors.redAccent,
+                                            fontSize: 12.0),
+                                        hintText: 'Blood Group',
+                                      ),
+                                      isEmpty: _currentSelectedValue == '',
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton<String>(
+                                          value: _currentSelectedValue,
+                                          isDense: true,
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              _currentSelectedValue = newValue!;
+                                              state.didChange(newValue);
+                                            });
+                                          },
+                                          items:
+                                              _currencies.map((String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    boxShadow: kBoxShadows),
+                                child: CircleAvatar(
+                                  radius: 80.0,
+                                  backgroundImage: profileImage == null
+                                      ? NetworkImage("https://fleenks.com/mv/" +
+                                          Data.map['photo_path'].toString())
+                                      : FileImage(File(profileImage!.path))
+                                          as ImageProvider,
+                                ),
+                              ),
+                              GestureDetector(
+                                  onTap: () async {
+                                    final ImagePicker _picker = ImagePicker();
+                                    final PickedFile? image =
+                                        await _picker.getImage(
+                                            source: ImageSource.gallery,
+                                            maxWidth: 1024,
+                                            maxHeight: 768);
+                                    setState(() {
+                                      profileImage = image;
+                                      setProfileImage(image);
+                                    });
+                                    print(image);
+                                  },
+                                  child: Text(
+                                    'Choose File',
+                                    style: TextStyle(color: Colors.blue),
+                                  )),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'File Size: Max.3MB & \n PNG/JPEG/JPG Formats Only.',
+                                  style: TextStyle(
+                                      fontSize: 10, color: Colors.red),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Padding(
+                                  padding: EdgeInsets.all(25),
+                                  child: GestureDetector(
+                                    child: Container(
+                                      width: size.width / 1.5,
+                                      height: size.height / 15,
+                                      decoration: BoxDecoration(
+                                          color: press
+                                              ? onPressColor
+                                              : buttonColor,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          boxShadow: kBoxShadows),
+                                      child: Center(
+                                        child: Text(
+                                          "Update",
+                                          style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontSize: size.width / 22,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () async {
+                                      setState(() {
+                                        press = !press;
+                                        _isLoading = true;
+                                      });
+
+                                      FocusScope.of(context).unfocus();
+                                      String base64Image = '';
+                                      if (profileImage != null) {
+                                        Uint8List imagebytes = await File(
+                                                profileImage!.path)
+                                            .readAsBytes(); //convert to bytes
+                                        base64Image = base64.encode(imagebytes);
+                                      }
+
+                                      NetWorking apiObj = NetWorking(
+                                          password: '', phoneNumber: '');
+                                      await apiObj
+                                          .updateDetails(
+                                              Data.map['id'].toString(),
+                                              emailController.text,
+                                              locationController.text,
+                                              mobileController.text,
+                                              _currentSelectedValue,
+                                              profileImage == null
+                                                  ? Data.map['photo_path']
+                                                  : base64Image)
+                                          .then((result) async {
+                                        print(result);
+                                        final snackBar = SnackBar(
+                                            content: Text(result[1] == 'K'
+                                                ? 'Updated Successfully'
+                                                : 'Failed'));
+                                        setState(() {
+                                          _isLoading = false;
+                                        });
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      });
+                                      Navigator.of(context).pop();
+                                    },
+                                  ))
+                            ],
+                          ),
+                        )),
             ));
+  }
+
+  void setProfileImage(PickedFile? image) {
+    setState(() {
+      profileImage = image;
+    });
   }
 }
