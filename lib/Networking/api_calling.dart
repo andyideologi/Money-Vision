@@ -68,6 +68,20 @@ class NetWorking {
     return response.reasonPhrase.toString();
   }
 
+  Future<String> Dashboard(String id) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://fleenks.com/mv/api/fr-dashboard'));
+    request.fields.addAll({'id': id});
+
+    http.StreamedResponse response = await request.send();
+    Map<String, Object> leadsInfo = {};
+    if (response.statusCode == 200) {
+      return await response.stream.bytesToString();
+    } else {
+      return response.reasonPhrase.toString();
+    }
+  }
+
   Future<String> updatePassword(
       String curpass, String newpass, String conpass) async {
     var request = http.MultipartRequest(

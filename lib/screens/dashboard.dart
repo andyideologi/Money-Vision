@@ -1,14 +1,44 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
 import 'package:franchise/Model/circle_bg.dart';
+import 'package:franchise/Networking/api_calling.dart';
+import 'package:franchise/Networking/data.dart';
 import 'package:franchise/screens/leads_screen.dart';
 import 'package:franchise/screens/notification_screen.dart';
 import 'package:franchise/widgets/custom_lead_listview.dart';
 
-class DashBoard extends StatelessWidget {
+class DashBoard extends StatefulWidget {
   const DashBoard({Key? key}) : super(key: key);
+
+  @override
+  State<DashBoard> createState() => _DashBoardState();
+}
+
+class _DashBoardState extends State<DashBoard> {
+  late final leadsInfoMap;
+  bool _isLoading = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLeadsData();
+  }
+
+  Future<void> getLeadsData() async {
+    setState(() {
+      _isLoading = true;
+    });
+    NetWorking netWorking = NetWorking(password: '', phoneNumber: '');
+    var leadsInfo = await netWorking.Dashboard(Data.map['id'].toString());
+    leadsInfoMap = json.decode(leadsInfo);
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,196 +96,217 @@ class DashBoard extends StatelessWidget {
           Container(
             color: Colors.blueGrey.shade50,
             child: IntrinsicHeight(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Center(
-                      // heightFactor: 35,
-                      // widthFactor: 40,
-                      child: Card(
-                        elevation: 8,
-                        // shadowColor: Colors.black,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Center(
-                              child: Text(
-                                "Leads",
-                                style: TextStyle(
-                                  color: Color(0xFFd00657),
-                                  fontSize: 24,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            const Center(
-                              child: Text(
-                                "How Much Should You Take?",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w200,
-                                ),
-                              ),
-                            ),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+              child: _isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : Row(
+                      children: [
+                        Expanded(
+                          child: Center(
+                            // heightFactor: 35,
+                            // widthFactor: 40,
+                            child: Card(
+                              elevation: 8,
+                              // shadowColor: Colors.black,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 16.0, bottom: 16.0, left: 16.0),
-                                    child: Column(
-                                      children: [
-                                        Countup(
-                                          begin: 0.0,
-                                          end: 80,
-                                          duration: const Duration(seconds: 2),
-                                          style: TextStyle(
-                                              color: Color(0xFFd00657),
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 24),
-                                        ),
-                                        Text(
-                                          "TOTAL LEADS",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w200,
-                                          ),
-                                        ),
-                                      ],
+                                  const Center(
+                                    child: Text(
+                                      "Leads",
+                                      style: TextStyle(
+                                        color: Color(0xFFd00657),
+                                        fontSize: 24,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
-                                  Container(
-                                    width: 0.9,
-                                    height: 45.0,
-                                    color: const Color(0xFFd00657),
-                                    margin: const EdgeInsets.only(right: 4),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, top: 16.0, bottom: 16.0),
-                                    child: Column(
-                                      children: [
-                                        Countup(
-                                          begin: 0.0,
-                                          end: 16,
-                                          duration: const Duration(seconds: 2),
-                                          style: TextStyle(
-                                              color: Color(0xFFd00657),
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 24),
-                                        ),
-                                        Text(
-                                          "OPEN",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w200,
-                                          ),
-                                        ),
-                                      ],
+                                  const Center(
+                                    child: Text(
+                                      "How Much Should You Take?",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w200,
+                                      ),
                                     ),
                                   ),
-                                  Container(
-                                    width: 0.9,
-                                    height: 45.0,
-                                    color: const Color(0xFFd00657),
-                                    margin: const EdgeInsets.only(right: 4),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Countup(
-                                          begin: 0,
-                                          end: 97,
-                                          duration: const Duration(seconds: 2),
-                                          style: TextStyle(
-                                              color: Color(0xFFd00657),
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 24),
-                                        ),
-                                        Text(
-                                          "IN PROCESS",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w200,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 16.0,
+                                              bottom: 16.0,
+                                              left: 16.0),
+                                          child: Column(
+                                            children: [
+                                              Countup(
+                                                begin: 0.0,
+                                                end: leadsInfoMap['total_leads']
+                                                    .toDouble(),
+                                                duration:
+                                                    const Duration(seconds: 2),
+                                                style: TextStyle(
+                                                    color: Color(0xFFd00657),
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 24),
+                                              ),
+                                              Text(
+                                                "TOTAL LEADS",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w200,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 0.9,
-                                    height: 45.0,
-                                    color: const Color(0xFFd00657),
-                                    margin: const EdgeInsets.only(right: 4),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Countup(
-                                          begin: 0.0,
-                                          end: 88,
-                                          duration: const Duration(seconds: 2),
-                                          style: TextStyle(
-                                              color: Color(0xFFd00657),
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 24),
+                                        Container(
+                                          width: 0.9,
+                                          height: 45.0,
+                                          color: const Color(0xFFd00657),
+                                          margin:
+                                              const EdgeInsets.only(right: 4),
                                         ),
-                                        Text(
-                                          "CLOSED",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w200,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0,
+                                              top: 16.0,
+                                              bottom: 16.0),
+                                          child: Column(
+                                            children: [
+                                              Countup(
+                                                begin: 0.0,
+                                                end: leadsInfoMap['open_leads']
+                                                    .toDouble(),
+                                                duration:
+                                                    const Duration(seconds: 2),
+                                                style: TextStyle(
+                                                    color: Color(0xFFd00657),
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 24),
+                                              ),
+                                              Text(
+                                                "OPEN",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w200,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ])
-                          ],
-                        ),
+                                        Container(
+                                          width: 0.9,
+                                          height: 45.0,
+                                          color: const Color(0xFFd00657),
+                                          margin:
+                                              const EdgeInsets.only(right: 4),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              Countup(
+                                                begin: 0,
+                                                end: leadsInfoMap[
+                                                        'in_process_leads']
+                                                    .toDouble(),
+                                                duration:
+                                                    const Duration(seconds: 2),
+                                                style: TextStyle(
+                                                    color: Color(0xFFd00657),
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 24),
+                                              ),
+                                              Text(
+                                                "IN PROCESS",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w200,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 0.9,
+                                          height: 45.0,
+                                          color: const Color(0xFFd00657),
+                                          margin:
+                                              const EdgeInsets.only(right: 4),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              Countup(
+                                                begin: 0.0,
+                                                end:
+                                                    leadsInfoMap['closed_leads']
+                                                        .toDouble(),
+                                                duration:
+                                                    const Duration(seconds: 2),
+                                                style: TextStyle(
+                                                    color: Color(0xFFd00657),
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 24),
+                                              ),
+                                              Text(
+                                                "CLOSED",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w200,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ])
+                                ],
+                              ),
 
-                        color: Colors.green.shade100,
-                        margin: const EdgeInsets.all(20),
-                        shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.green.shade100),
+                              color: Colors.green.shade100,
+                              margin: const EdgeInsets.all(20),
+                              shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide:
+                                    BorderSide(color: Colors.green.shade100),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             ),
           ),
           Container(
             height: 38,
-            color:Colors.blueGrey.shade50,
+            color: Colors.blueGrey.shade50,
           ),
           Container(
             color: Colors.blueGrey.shade50,
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(

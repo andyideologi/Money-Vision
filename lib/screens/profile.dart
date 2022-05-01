@@ -87,7 +87,15 @@ class _ProfileState extends State<Profile> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
           title: Row(
-            children: [Text("Update Password"), CloseButton()],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Update Password"),
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.cancel))
+            ],
           ),
           actions: [
             Form(
