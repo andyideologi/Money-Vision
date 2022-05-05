@@ -18,8 +18,6 @@ import '../Model/Service.dart';
 import '../Networking/api_calling.dart';
 
 class ServicePage extends StatefulWidget {
-
-
   ServicePage({Key? key}) : super(key: key);
 
   @override
@@ -41,35 +39,58 @@ class _ServicePageState extends State<ServicePage> {
     return services;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         // ignore: prefer_const_constructors
+        backgroundColor: const Color(0xFFd00657),
         body: SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20,
+          child: Container(
+            child: Column(
+              children: [
+                ClipPath(
+                  clipper: ArcClipper(),
+                  child: Container(
+                    width: double.infinity,
+                    height: 8,
+                    color: Colors.pink,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey.shade50, //Colors.green.shade100
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(40.0),
+                        topRight: Radius.circular(40.0),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        FutureBuilder<String>(
+                          future:
+                              call(), // a previously-obtained Future<String> or null
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            List<Widget> children;
+                            if (snapshot.hasData) {
+                              return CustomDropDown(items: items);
+                            }
+                            return Center();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            FutureBuilder<String>(
-              future: call(), // a previously-obtained Future<String> or null
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                List<Widget> children;
-                if (snapshot.hasData) {
-                  return CustomDropDown(items: items);
-                }
-                return Center(
-
-                  );
-              },
-            ),
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 
   Future<String> call() async {
@@ -88,10 +109,14 @@ class _ServicePageState extends State<ServicePage> {
 
       categories.forEach((element) {
         element.services.forEach((element) {
-          ExpansionService expansionService = ExpansionService(header: element.service_name, id: 1, body: element.service_description);
+          ExpansionService expansionService = ExpansionService(
+              header: element.service_name,
+              id: 1,
+              body: element.service_description);
           sers.add(expansionService);
         });
-        ExpansionItem expansionItem = ExpansionItem(header: element.category_name, id: 1, body: sers);
+        ExpansionItem expansionItem =
+            ExpansionItem(header: element.category_name, id: 1, body: sers);
         items.add(expansionItem);
       });
     });

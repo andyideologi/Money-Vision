@@ -5,10 +5,12 @@ import 'dart:convert';
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
 import 'package:franchise/Model/circle_bg.dart';
+import 'package:franchise/Model/lead_data.dart';
 import 'package:franchise/Networking/api_calling.dart';
 import 'package:franchise/Networking/data.dart';
 import 'package:franchise/screens/leads_screen.dart';
 import 'package:franchise/screens/notification_screen.dart';
+import 'package:franchise/widgets/card_design.dart';
 import 'package:franchise/widgets/custom_lead_listview.dart';
 
 class DashBoard extends StatefulWidget {
@@ -21,6 +23,7 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   late final leadsInfoMap;
   bool _isLoading = false;
+  List<Leads> latestLeads = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -33,8 +36,24 @@ class _DashBoardState extends State<DashBoard> {
       _isLoading = true;
     });
     NetWorking netWorking = NetWorking(password: '', phoneNumber: '');
-    var leadsInfo = await netWorking.Dashboard(Data.map['id'].toString());
+    var leadsInfo = await netWorking.dashboardLeads(Data.map['id'].toString());
     leadsInfoMap = json.decode(leadsInfo);
+    json.decode(leadsInfo)['latest_ten_leads'].forEach((lead) {
+      latestLeads.add(Leads(
+          emailID: lead['pers_email']!,
+          leadID: lead['id']!.toString(),
+          name: lead['name']!,
+          phoneNumber: lead['whatsapp']!,
+          status: lead['status']!,
+          instructions: lead['instruction_by_fr']!,
+          secNumber: lead['sec_mobile']!,
+          rawDescription: lead['raw_desc']!,
+          createdDate: lead['created_at'],
+          updatedDate: lead['updated_at']));
+    });
+    print(leadsInfoMap);
+    print('************');
+    print(latestLeads);
     setState(() {
       _isLoading = false;
     });
@@ -336,7 +355,21 @@ class _DashBoardState extends State<DashBoard> {
               ],
             ),
           ),
-          CustomCard(),
+          _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: latestLeads.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      color: Colors.blueGrey.shade50,
+                      child: CardDesign(
+                        lead: latestLeads[index],
+                      ),
+                    );
+                  },
+                ),
         ],
       ),
     );

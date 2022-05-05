@@ -6,6 +6,8 @@ import 'dart:math';
 import 'package:franchise/Model/login_model.dart';
 import 'package:http/http.dart' as http;
 
+import 'data.dart';
+
 class NetWorking {
   String phoneNumber;
   String password;
@@ -68,13 +70,96 @@ class NetWorking {
     return response.reasonPhrase.toString();
   }
 
-  Future<String> Dashboard(String id) async {
+  Future<String> dashboardLeads(String id) async {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://fleenks.com/mv/api/fr-dashboard'));
     request.fields.addAll({'id': id});
 
     http.StreamedResponse response = await request.send();
     Map<String, Object> leadsInfo = {};
+    if (response.statusCode == 200) {
+      return await response.stream.bytesToString();
+    } else {
+      return response.reasonPhrase.toString();
+    }
+  }
+
+  Future<String> addUpdateLead(
+      {required String id,
+      String? leadId,
+      required String name,
+      required String whatsapp,
+      required String mobile,
+      required String email,
+      required String instruction,
+      required String raw_des}) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://fleenks.com/mv/api/fr-lead-add-update'));
+    request.fields.addAll({
+      'id': id,
+      'lead_id': leadId ?? '',
+      'name': name,
+      'whatsapp': whatsapp,
+      'sec_mobile': mobile,
+      'pers_email': email,
+      'instruction_by_fr': instruction,
+      'raw_desc': raw_des
+    });
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return await response.stream.bytesToString();
+    } else {
+      return response.reasonPhrase.toString();
+    }
+  }
+
+  Future<String> deleteLead(String id) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://fleenks.com/mv/api/fr-lead-delete'));
+    request.fields.addAll({'id': id});
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return await response.stream.bytesToString();
+    } else {
+      return response.reasonPhrase.toString();
+    }
+  }
+
+  Future<String> getNotifications() async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://fleenks.com/mv/api/fr-notifications-list'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return await response.stream.bytesToString();
+    } else {
+      return response.reasonPhrase.toString();
+    }
+  }
+
+  Future<String> getAllLeads() async {
+    late List<dynamic> m;
+    late String filespath;
+    late String mobile;
+    await getProfileDetails(Data.map['id'].toString()).then((value) {
+      Map<String, dynamic> data = jsonDecode(value);
+      print(data.toString());
+      filespath = data['files_path'];
+      m = data['profile_obj'];
+      mobile = m[0]['whatsapp'].toString();
+    });
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://fleenks.com/mv/api/fr-all-leads'));
+    request.fields
+        .addAll({'id': Data.map['id'].toString(), 'whatsapp': mobile});
+
+    http.StreamedResponse response = await request.send();
+
     if (response.statusCode == 200) {
       return await response.stream.bytesToString();
     } else {

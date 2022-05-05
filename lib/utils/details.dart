@@ -3,295 +3,187 @@ import 'package:franchise/Model/notification_data.dart';
 
 List<Leads> Details = [
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Anurag Joshi",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Pascal Davinci",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Shahrukh khan",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Micheal Lorem",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Akshay Khanna",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Raj Purohit",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
   Leads(
-      description:
+      rawDescription:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       emailID: "xyz@gmail.com",
       instructions:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
       leadID: "XYZ001",
       name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "TYSY23",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "ABC123",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
-  Leads(
-      description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      emailID: "xyz@gmail.com",
-      instructions:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu.",
-      leadID: "XYZ001",
-      name: "Lorem ipsum",
-      phoneNumber: 0123456789,
-      status: "OPEN"),
+      phoneNumber: '0123456789',
+      status: "OPEN",
+      secNumber: '1',
+      createdDate: '9-9-22',
+      updatedDate: '9-9-22'),
 ];
 
 List<Notification> notify = [

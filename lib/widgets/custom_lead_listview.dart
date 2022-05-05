@@ -13,7 +13,6 @@ class CustomCard extends StatefulWidget {
 }
 
 class _CustomCardState extends State<CustomCard> {
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -24,15 +23,7 @@ class _CustomCardState extends State<CustomCard> {
         return Container(
           color: Colors.blueGrey.shade50,
           child: CardDesign(
-            index: 10,
-            name: Details[index].name,
-            dateTime: DateTime.now().toString(),
-            desc: Details[index].description,
-            email: Details[index].emailID,
-            instr: Details[index].instructions,
-            leadId: Details[index].leadID,
-            phoneNumber: Details[index].phoneNumber,
-            status: Details[index].status,
+            lead: Details[index],
           ),
         );
       },

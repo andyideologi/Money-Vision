@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_this, unnecessary_new, unused_field, prefer_const_constructors, unnecessary_const
 
+import 'dart:convert';
+
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,8 +9,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:franchise/Model/circle_bg.dart';
+import 'package:franchise/Networking/api_calling.dart';
 import 'package:franchise/screens/notification_screen.dart';
 import 'package:franchise/utils/constants.dart';
+import 'package:franchise/Networking/data.dart';
 
 class AddLeads extends StatefulWidget {
   const AddLeads({Key? key}) : super(key: key);
@@ -23,24 +27,35 @@ class _AddLeadsState extends State<AddLeads> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  List<String> locations = [ 'OPEN', 'IN PROCESS', 'CLOSED'];
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _instructionController = TextEditingController();
+  final _rawDesController = TextEditingController();
+  final _secMobController = TextEditingController();
+  final List<String> locations = ['OPEN', 'IN PROCESS', 'CLOSED'];
   String _selectedLocation = 'OPEN';
   final _dateController = TextEditingController();
 
   @override
   void initState() {
-
     super.initState();
   }
 
-  DateTime _dateTime = new DateTime(2022,12,24);
+  DateTime _dateTime = new DateTime(2022, 12, 24);
 
   final List<DropdownMenuItem> items = [];
   String selectedValue = "";
 
-   bool press = false;
+  bool press = false;
   Color onPressColor = const Color(0xFFd00657).withOpacity(0.7);
   Color buttonColor = const Color(0xFFd00657);
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +65,10 @@ class _AddLeadsState extends State<AddLeads> {
         flexibleSpace: Align(
           alignment: Alignment.bottomRight,
           child: Padding(
-            padding: EdgeInsets.only(right: 10,bottom: 5),
+            padding: EdgeInsets.only(right: 10, bottom: 5),
             child: CircleBackground(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_){
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return NotificationScreen();
                 }));
               },
@@ -87,101 +102,101 @@ class _AddLeadsState extends State<AddLeads> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-              ClipPath(
-            clipper: ArcClipper(),
-            child: Container(
-              width: size.width,
-              height: 8,
-              color: Colors.pink,
+            ClipPath(
+              clipper: ArcClipper(),
+              child: Container(
+                width: size.width,
+                height: 15,
+                color: Colors.pink,
+              ),
             ),
-          ),
-         Expanded(
-                child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey.shade50,//Colors.green.shade100
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(40.0),
-                        topRight: Radius.circular(40.0),
-                      ),
+            Expanded(
+              child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  decoration: BoxDecoration(
+                    color: Colors.blueGrey.shade50, //Colors.green.shade100
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(40.0),
+                      topRight: Radius.circular(40.0),
                     ),
-                    child: Form(
-                      key: _formKey,
-                      child: IntrinsicHeight(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SizedBox(height: 10,),
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: IntrinsicHeight(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              elevation: 8,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 20),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 50),
+                                      child: TextFormField(
+                                        controller: _nameController,
+                                        decoration: const InputDecoration(
+                                          labelText: "Name *",
+                                          labelStyle: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w100),
+                                          prefixStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10),
+                                        ),
+                                        validator: (value) {
+                                          return null;
+                                        },
+                                      ),
+                                    ),
                                   ),
-                                elevation: 8,
-                                margin: EdgeInsets.symmetric(horizontal: 10,vertical: 20),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 50),
-                                        child: TextFormField(
-                                          decoration: const InputDecoration(
-                                            labelText: "Name",
-                                            labelStyle: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w100),
-                                            prefixStyle: TextStyle(
-                                                color: Colors.black, fontSize: 10),
-                                          ),
-                                          validator: (value) {
-                                            return null;
-                                          },
-                                          onChanged: (_) {
-                                            setState(() {});
-                                          },
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 50),
+                                      child: TextFormField(
+                                        controller: _emailController,
+                                        decoration: const InputDecoration(
+                                          labelText: "Personal Email",
+                                          labelStyle: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w100),
+                                          // suffixIcon: _clearIconButton(_passwordController),
+                                          prefixStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10),
                                         ),
+                                        validator: (value) {
+                                          return null;
+                                        },
                                       ),
                                     ),
-                                                      
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 50),
-                                        child: TextFormField(
-                                          decoration: const InputDecoration(
-                                            labelText: "Email ID",
-                                            labelStyle: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w100),
-                                            // suffixIcon: _clearIconButton(_passwordController),
-                                            prefixStyle: TextStyle(
-                                                color: Colors.black, fontSize: 10),
-                                          ),
-                                          validator: (value) {
-                                            return null;
-                                          },
-                                          onChanged: (_) {
-                                            setState(() {});
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 50),
-                                        child: TextFormField(
-                                          // controller: _passwordController,
-                                          decoration: InputDecoration(
-                                            prefix: CountryCodePicker(
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 50),
+                                      child: TextFormField(
+                                        controller: _phoneController,
+                                        decoration: InputDecoration(
+                                          prefix: CountryCodePicker(
                                             initialSelection: 'IN',
-                                            favorite: const ['+91','IN'],
+                                            favorite: const ['+91', 'IN'],
                                             padding: EdgeInsets.all(0.1),
                                             enabled: true,
                                             hideMainText: false,
@@ -191,221 +206,231 @@ class _AddLeadsState extends State<AddLeads> {
                                             showOnlyCountryWhenClosed: false,
                                             showCountryOnly: false,
                                           ),
-                                            labelText: "Phone Number",
-                                            labelStyle: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w100),
-                                            // suffixIcon: _clearIconButton(_passwordController),
-                                            prefixStyle: TextStyle(
-                                                color: Colors.black, fontSize: 10),
-                                          ),
-                                          validator: (value) {
-                                            return null;
-                                          },
-                                          onChanged: (_) {
-                                            setState(() {});
-                                          },
+                                          labelText: "Whatsapp Number *",
+                                          labelStyle: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w100),
+                                          // suffixIcon: _clearIconButton(_passwordController),
+                                          prefixStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10),
                                         ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 50),
-                                        child: TextFormField(
-                                          // controller: _passwordController,
-                                          decoration: const InputDecoration(
-                                            labelText: "Description",
-                                            labelStyle: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w100),
-                                            // suffixIcon: _clearIconButton(_passwordController),
-                                            prefixStyle: TextStyle(
-                                                color: Colors.black, fontSize: 10),
-                                          ),
-                                          validator: (value) {
-                                            return null;
-                                          },
-                                          onChanged: (_) {
-                                            setState(() {});
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 50),
-                                        child: TextFormField(
-                                          // controller: _passwordController,
-                                          decoration: const InputDecoration(
-                                            labelText: "Instruction",
-                                                      
-                                            labelStyle: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w100),
-                                            // suffixIcon: _clearIconButton(_passwordController),
-                                            prefixStyle: TextStyle(
-                                                color: Colors.black, fontSize: 15),
-                                          ),
-                                          validator: (value) {
-                                            return null;
-                                          },
-                                          onChanged: (_) {
-                                            setState(() {});
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 50),
-                                        child: TextFormField(
-                                          keyboardType: TextInputType.none,
-                                          controller: _dateController,
-                                          decoration: InputDecoration(        
-                                            hintText:"YYYY-MM-DD",
-                                            labelText: "Date",
-                                            labelStyle: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w100),
-                                            // suffixIcon: _clearIconButton(_passwordController),
-                                          ),
-                                          validator: (value) {
-                                            return null;
-                                          },
-                                          onChanged: (_) {
-                                            setState(() {});
-                                          },   
-                                          onTap: () async {
-                                         DateTime? dateTime = await showDatePicker
-                                         (context: context, 
-                                         initialDate: DateTime.now(), 
-                                         firstDate: DateTime(1900)
-                                         lastDate: DateTime(2100));
-                                                      
-                                          if(dateTime==null){
-                                            return;
-                                          }
-                                                      
-                                          setState(() {
-                                            _dateTime = dateTime;
-                                            _dateController.text = _dateTime.toString().substring(0,10);
-                                          });
-                                                      
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 8,),
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 50),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Lead Status",style: poppinFonts(Colors.black54, FontWeight.w200, 17),),
-                                            SizedBox(width: 15,),
-                                            DropdownButton<String>(
-                                            underline: SizedBox(
-                                                height: 0.8,
-                                                child: Container(   
-                                                  color: Colors.black54,
-                                                )),
-                                            style: const TextStyle(
-                                                color: Colors.black54,
-                                                fontFamily: 'Poppins',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w200),
-                                            items: locations.map((String val) {
-                                              return DropdownMenuItem<String>(
-                                                value: val,
-                                                child: Text(
-                                                  val,
-                                                  style: const TextStyle(
-                                                      color: Colors.black54,
-                                                      fontFamily: 'Poppins',
-                                                      fontSize: 15,
-                                                      fontWeight: FontWeight.w200),
-                                                ),
-                                              );
-                                            }).toList(),
-                                            value: _selectedLocation,
-                                            hint: const Text(
-                                              "Lead Status    ",
-                                              style: TextStyle(
-                                                  color: Colors.black54,
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w200),
-                                            ),
-                                            onChanged: (newVal) {
-                                              _selectedLocation = newVal!;
-                                              this.setState(() {});
-                                            }),
-                                          ]
-                                        ),
-                                      ),
-                                    ),
-                                     SizedBox(
-                                  height: size.height/20,
-                                ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 24.0, left: 8.0, right: 8.0, bottom: 24.0),
-                                      child: Container(
-                                        // width: 500,
-                                                      
-                                        // color: Color(0xff01661c),
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 50),
-                                        child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      press = !press;
-                                    });
-                                    
-                                  },
-                                  child: Container(
-                                    width: size.width/1.5,
-                                    height: size.height / 15,
-                                    decoration: BoxDecoration(
-                                        color: press ? onPressColor : buttonColor,
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: kBoxShadows),
-                                    child: Center(
-                                      child: Text(
-                                        "Save",
-                                        style: TextStyle(
-                                            fontFamily: 'Poppins',
-                                            fontSize: size.width / 22,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
+                                        validator: (value) {
+                                          return null;
+                                        },
                                       ),
                                     ),
                                   ),
-                                )
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 50),
+                                      child: TextFormField(
+                                        controller: _secMobController,
+                                        decoration: InputDecoration(
+                                          prefix: CountryCodePicker(
+                                            initialSelection: 'IN',
+                                            favorite: const ['+91', 'IN'],
+                                            padding: EdgeInsets.all(0.1),
+                                            enabled: true,
+                                            hideMainText: false,
+                                            showFlag: true,
+                                            showFlagMain: true,
+                                            showFlagDialog: true,
+                                            showOnlyCountryWhenClosed: false,
+                                            showCountryOnly: false,
+                                          ),
+                                          labelText: "Alternate Number",
+                                          labelStyle: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w100),
+                                          // suffixIcon: _clearIconButton(_passwordController),
+                                          prefixStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10),
+                                        ),
+                                        validator: (value) {
+                                          return null;
+                                        },
                                       ),
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 50),
+                                      child: TextFormField(
+                                        maxLines: null,
+                                        controller: _descriptionController,
+                                        decoration: const InputDecoration(
+                                          labelText:
+                                              "Enter Detailed Service Requirements *",
+                                          labelStyle: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w100),
+                                          // suffixIcon: _clearIconButton(_passwordController),
+                                          prefixStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10),
+                                        ),
+                                        validator: (value) {
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 50),
+                                      child: TextFormField(
+                                        maxLines: null,
+                                        controller: _instructionController,
+                                        decoration: const InputDecoration(
+                                          labelText:
+                                              "Enter Instructions, if any",
+
+                                          labelStyle: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w100),
+                                          // suffixIcon: _clearIconButton(_passwordController),
+                                          prefixStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15),
+                                        ),
+                                        validator: (value) {
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 50),
+                                      child: TextFormField(
+                                        controller: _rawDesController,
+                                        decoration: const InputDecoration(
+                                          labelText: "Raw Description",
+
+                                          labelStyle: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w100),
+                                          // suffixIcon: _clearIconButton(_passwordController),
+                                          prefixStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15),
+                                        ),
+                                        validator: (value) {
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: size.height / 20,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 24.0,
+                                        left: 8.0,
+                                        right: 8.0,
+                                        bottom: 24.0),
+                                    child: Container(
+                                        // width: 500,
+
+                                        // color: Color(0xff01661c),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            setState(() {
+                                              press = !press;
+                                            });
+                                            print(_nameController.text);
+                                            print(_secMobController.text);
+                                            print(_rawDesController.text);
+                                            print(_emailController.text);
+                                            print(_phoneController.text);
+                                            print(_descriptionController.text);
+                                            print(_instructionController.text);
+                                            NetWorking apiObj = NetWorking(
+                                                password: '', phoneNumber: '');
+                                            await apiObj
+                                                .addUpdateLead(
+                                                    id: Data.map['id']
+                                                        .toString(),
+                                                    name: _nameController.text,
+                                                    whatsapp:
+                                                        _phoneController.text,
+                                                    mobile:
+                                                        _secMobController.text,
+                                                    email:
+                                                        _emailController.text,
+                                                    instruction:
+                                                        _instructionController
+                                                            .text,
+                                                    raw_des:
+                                                        _rawDesController.text)
+                                                .then((value) {
+                                              var result = json.decode(value);
+                                              if (result['status'] == 1) {
+                                                final snackBar = SnackBar(
+                                                    content: Text(
+                                                        result['message']));
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                                Navigator.of(context).pop();
+                                              } else {
+                                                final snackBar = SnackBar(
+                                                    content: Text(
+                                                        'Something went wrong!'));
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                              }
+                                            });
+                                          },
+                                          child: Container(
+                                            width: size.width / 1.5,
+                                            height: size.height / 15,
+                                            decoration: BoxDecoration(
+                                                color: press
+                                                    ? onPressColor
+                                                    : buttonColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                boxShadow: kBoxShadows),
+                                            child: Center(
+                                              child: Text(
+                                                "Save",
+                                                style: TextStyle(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: size.width / 22,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                        )),
+                                  )
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    )),
-              ),
+                    ),
+                  )),
+            ),
           ],
         ),
       ),

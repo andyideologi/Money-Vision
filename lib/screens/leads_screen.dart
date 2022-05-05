@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, unnecessary_this
 
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:franchise/Model/circle_bg.dart';
 import 'package:franchise/Model/lead_data.dart';
+import 'package:franchise/Networking/api_calling.dart';
 import 'package:franchise/screens/notification_screen.dart';
 import 'package:franchise/utils/constants.dart';
 import 'package:franchise/utils/details.dart';
@@ -21,7 +23,9 @@ class LeadPage extends StatefulWidget {
 
 class _LeadPageState extends State<LeadPage> {
   String query = '';
-  List<Leads> leads = Details;
+  // List<Leads> leads = Details;
+  List<Leads> leadsFromErp = [];
+  bool _isLoading = false;
 
   Widget buildSearch() => SearchWidget(
       text: query,
@@ -31,11 +35,11 @@ class _LeadPageState extends State<LeadPage> {
   void searchLead(String query) {
     if (query == '') {
       setState(() {
-        this.leads = Details;
+        this.leadsFromErp = Details;
       });
     }
     print(query);
-      final listLeads = leads.where((element) {
+    final listLeads = leadsFromErp.where((element) {
       final nameLower = element.name.toLowerCase();
       final leadName = query.toLowerCase();
       final leadId = element.leadID.toLowerCase();
@@ -45,13 +49,46 @@ class _LeadPageState extends State<LeadPage> {
     }).toList();
 
     setState(() {
-      this.leads = listLeads;
+      this.leadsFromErp = listLeads;
       this.query = query;
     });
   }
 
   @override
-  Widget build(BuildContext context) { 
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLeadsFromErp();
+  }
+
+  Future<void> getLeadsFromErp() async {
+    setState(() {
+      _isLoading = true;
+    });
+    NetWorking apiObj = NetWorking(password: '', phoneNumber: '');
+    var leadsJosn = await apiObj.getAllLeads();
+    var leads = json.decode(leadsJosn)['all_leads'];
+    leads.forEach((lead) {
+      leadsFromErp.add(Leads(
+          emailID: lead['pers_email']!,
+          leadID: lead['id']!.toString(),
+          name: lead['name']!,
+          phoneNumber: lead['whatsapp']!,
+          status: lead['status']!,
+          instructions: lead['instruction_by_fr']!,
+          secNumber: lead['sec_mobile']!,
+          rawDescription: lead['raw_desc']!,
+          createdDate: lead['created_at'],
+          updatedDate: lead['updated_at']));
+    });
+    setState(() {
+      _isLoading = false;
+    });
+    print(leadsFromErp.length);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -103,38 +140,34 @@ class _LeadPageState extends State<LeadPage> {
             ),
           ),
           buildSearch(),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.blueGrey.shade50,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
-                ),
-              ),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: leads.length,
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Container(
-                    child: CardDesign(
-                      index: index,
-                      name: leads[index].name,
-                      dateTime: DateTime.now().toString(),
-                      desc: leads[index].description,
-                      email: leads[index].emailID,
-                      instr: leads[index].instructions,
-                      leadId: leads[index].leadID,
-                      phoneNumber: leads[index].phoneNumber,
-                      status: leads[index].status,
+          _isLoading
+              ? CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey.shade50,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40.0),
+                        topRight: Radius.circular(40.0),
+                      ),
                     ),
-                  );
-                },
-              ),
-            ),
-          ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: leadsFromErp.length,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: CardDesign(
+                            lead: leadsFromErp[index],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
         ]));
   }
 }

@@ -1,34 +1,19 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_this
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:franchise/Model/lead_data.dart';
+import 'package:franchise/Networking/api_calling.dart';
 import 'package:franchise/screens/lead_form_designed.dart';
 import 'package:franchise/utils/constants.dart';
 import 'package:franchise/utils/details.dart';
 
 class CardDesign extends StatefulWidget {
-  final String name;
-  final String leadId;
-  final String desc;
-  final String instr;
-  final String status;
-  final String email;
-  final int phoneNumber;
-  final int index;
-  final String dateTime;
+  final Leads lead;
 
-  CardDesign(
-      {Key? key,
-      required this.name,
-      required this.leadId,
-      required this.desc,
-      required this.index,
-      required this.instr,
-      required this.email,
-      required this.phoneNumber,
-      required this.dateTime,
-      required this.status})
-      : super(key: key);
+  CardDesign({Key? key, required this.lead}) : super(key: key);
 
   @override
   State<CardDesign> createState() => _CardDesignState();
@@ -45,10 +30,24 @@ class _CardDesignState extends State<CardDesign> {
           title: const Text("Confirm Record Deletion"),
           content: const Text("Do you really want to delete this record ?"),
           actions: [
-            TextButton(onPressed: () {
-              //TODO:
-            }, 
-            child: Text("Yes")),
+            TextButton(
+                onPressed: () async {
+                  NetWorking apiObj = NetWorking(password: '', phoneNumber: '');
+                  await apiObj.deleteLead(widget.lead.leadID).then((value) {
+                    var result = json.decode(value);
+                    if (result['status'] == 1) {
+                      final snackBar =
+                          SnackBar(content: Text(result['message']));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Navigator.of(context).pop();
+                    } else {
+                      final snackBar =
+                          SnackBar(content: Text('Something went wrong!'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  });
+                },
+                child: Text("Yes")),
             TextButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -63,10 +62,12 @@ class _CardDesignState extends State<CardDesign> {
     return Card(
       child: ListTile(
         title: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Text(this.widget.name,
+                Text(this.widget.lead.name,
                     style: const TextStyle(
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w400,
@@ -76,7 +77,10 @@ class _CardDesignState extends State<CardDesign> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      this.widget.leadId,
+                      'LEAD' +
+                          (this.widget.lead.leadID.length == 1
+                              ? '0${this.widget.lead.leadID}'
+                              : this.widget.lead.leadID),
                       style: const TextStyle(
                         fontSize: 16,
                         fontFamily: 'Poppins',
@@ -92,6 +96,7 @@ class _CardDesignState extends State<CardDesign> {
               thickness: 0.40,
             ),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const Padding(
                   padding: EdgeInsets.all(4.0),
@@ -102,7 +107,10 @@ class _CardDesignState extends State<CardDesign> {
                   ),
                 ),
                 Text(
-                  this.widget.phoneNumber.toString(),
+                  this.widget.lead.phoneNumber.toString() +
+                      (this.widget.lead.secNumber.toString() == ''
+                          ? ''
+                          : '/${this.widget.lead.secNumber.toString()}'),
                   style: const TextStyle(
                     fontSize: 14,
                     fontFamily: 'Poppins',
@@ -110,26 +118,33 @@ class _CardDesignState extends State<CardDesign> {
                   ),
                 ),
                 Spacer(),
-                const Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Icon(
-                    Icons.email_outlined,
-                    size: 15.0,
-                    color: Color(0xFFd00657),
-                  ),
-                ),
-                Text(
-                  this.widget.email,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
               ],
             ),
+            if (this.widget.lead.emailID != '')
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Icon(
+                      Icons.email_outlined,
+                      size: 15.0,
+                      color: Color(0xFFd00657),
+                    ),
+                  ),
+                  Text(
+                    this.widget.lead.emailID,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ],
+              ),
             Text(
-              this.widget.desc,
+              'Enter Detailed Service Requirements : ${this.widget.lead.rawDescription}',
+              textAlign: TextAlign.left,
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,
@@ -141,7 +156,8 @@ class _CardDesignState extends State<CardDesign> {
               height: 10,
             ),
             Text(
-              this.widget.instr,
+              "Enter Instructions, if any :${this.widget.lead.instructions}",
+              textAlign: TextAlign.left,
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,
@@ -153,7 +169,7 @@ class _CardDesignState extends State<CardDesign> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  this.widget.status.toUpperCase(),
+                  this.widget.lead.status.toUpperCase(),
                   style: const TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600,
@@ -163,9 +179,10 @@ class _CardDesignState extends State<CardDesign> {
                 Spacer(),
                 GestureDetector(
                   onTap: () {
-                    if (widget.status == "OPEN") {
+                    if (widget.lead.status == "OPEN") {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LeadFormDesign()));
+                          builder: (context) =>
+                              LeadFormDesign(lead: widget.lead)));
                     }
                     press1 = !press1;
                     setState(() {});
@@ -221,12 +238,13 @@ class _CardDesignState extends State<CardDesign> {
                   ),
                 ),
               ],
-            ), 
-            const Padding(
+            ),
+            Padding(
               padding: EdgeInsets.only(bottom: 4.0, top: 2.0),
               child: Center(
                 child: Text(
-                  "09-03-2022",
+                  "${this.widget.lead.createdDate}",
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 12,

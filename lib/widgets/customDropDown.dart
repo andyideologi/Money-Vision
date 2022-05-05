@@ -12,7 +12,6 @@ class CustomDropDown extends StatefulWidget {
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -47,57 +46,61 @@ class _CustomDropDownState extends State<CustomDropDown> {
                   ),
                   Text(
                     item.header,
-                    style: poppinFonts(Colors.black, FontWeight.normal, 15),
+                    style: poppinFonts(Colors.green, FontWeight.normal, 15),
                   ),
                 ]),
               );
             },
-            body:SizedBox(
-                  child: ExpansionPanelList(
-                      elevation: 0,
-                      dividerColor: Colors.transparent,
-                        expansionCallback: (int indexi, bool isExpanded) {
-                        setState(() {
-                          item.body[indexi].isExpanded = !item.body[indexi].isExpanded;
-                          for (int i = 0; i < item.body.length; i++) {
-                            if (i != indexi) {
-                              item.body[i].isExpanded = false;
-                            }
-                          }
-                        });
+            body: SizedBox(
+              child: ExpansionPanelList(
+                elevation: 0,
+                dividerColor: Colors.transparent,
+                expansionCallback: (int indexi, bool isExpanded) {
+                  setState(() {
+                    item.body[indexi].isExpanded =
+                        !item.body[indexi].isExpanded;
+                    for (int i = 0; i < item.body.length; i++) {
+                      if (i != indexi) {
+                        item.body[i].isExpanded = false;
+                      }
+                    }
+                  });
+                },
+                children: item.body.map((ExpansionService element) {
+                  return ExpansionPanel(
+                      backgroundColor: Colors.transparent,
+                      isExpanded: element.isExpanded,
+                      headerBuilder: (BuildContext context, bool isExpanded) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 25),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(8),
+                          child: Row(children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              element.header,
+                              style: poppinFonts(
+                                  Colors.grey, FontWeight.normal, 15),
+                            ),
+                          ]),
+                        );
                       },
-                      children: item.body.map((ExpansionService element){
-                          return ExpansionPanel(
-                          backgroundColor: Colors.transparent,
-                          isExpanded: element.isExpanded,
-                          headerBuilder: (BuildContext context, bool isExpanded){
-                            return Container(
-                                margin: EdgeInsets.symmetric(horizontal:25),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(8),
-                                child: Row(children: [
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    element.header,
-                                    style: poppinFonts(Colors.black, FontWeight.normal, 15),
-                                  ),
-                                ]),
-                              );
-                          }, body: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 50),
-                              child: Text(element.body),
-                            ));
-                      }).toList(),
-                  ),
-                )                
-                );
+                      body: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 50),
+                        child: Text(
+                          element.body,
+                          style: TextStyle(color: Colors.indigo),
+                        ),
+                      ));
+                }).toList(),
+              ),
+            ));
       }).toList(),
-    )
-    );
+    ));
   }
 }
 
@@ -107,12 +110,12 @@ class ExpansionItem {
   final List<ExpansionService> body;
   final int id;
 
-  ExpansionItem(
-      {this.isExpanded = false,
-      required this.header,
-      required this.id,
-      required this.body,
-      });
+  ExpansionItem({
+    this.isExpanded = false,
+    required this.header,
+    required this.id,
+    required this.body,
+  });
 }
 
 class ExpansionService {
@@ -121,10 +124,10 @@ class ExpansionService {
   final String body;
   final int id;
 
-  ExpansionService(
-      {this.isExpanded = false,
-        required this.header,
-        required this.id,
-        required this.body,
-      });
+  ExpansionService({
+    this.isExpanded = false,
+    required this.header,
+    required this.id,
+    required this.body,
+  });
 }
