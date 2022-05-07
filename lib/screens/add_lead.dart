@@ -14,6 +14,8 @@ import 'package:franchise/screens/notification_screen.dart';
 import 'package:franchise/utils/constants.dart';
 import 'package:franchise/Networking/data.dart';
 
+import 'home.dart';
+
 class AddLeads extends StatefulWidget {
   const AddLeads({Key? key}) : super(key: key);
 
@@ -156,6 +158,8 @@ class _AddLeadsState extends State<AddLeads> {
                                               fontSize: 10),
                                         ),
                                         validator: (value) {
+                                          if (value!.isEmpty)
+                                            return 'Please Enter Your Name';
                                           return null;
                                         },
                                       ),
@@ -216,6 +220,9 @@ class _AddLeadsState extends State<AddLeads> {
                                               fontSize: 10),
                                         ),
                                         validator: (value) {
+                                          if (value!.isEmpty ||
+                                              value.length < 10)
+                                            return 'Please Whatsapp Number Properly';
                                           return null;
                                         },
                                       ),
@@ -278,6 +285,8 @@ class _AddLeadsState extends State<AddLeads> {
                                               fontSize: 10),
                                         ),
                                         validator: (value) {
+                                          if (value!.isEmpty)
+                                            return 'Please Enter Your Requirements';
                                           return null;
                                         },
                                       ),
@@ -310,31 +319,6 @@ class _AddLeadsState extends State<AddLeads> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 50),
-                                      child: TextFormField(
-                                        controller: _rawDesController,
-                                        decoration: const InputDecoration(
-                                          labelText: "Raw Description",
-
-                                          labelStyle: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w100),
-                                          // suffixIcon: _clearIconButton(_passwordController),
-                                          prefixStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15),
-                                        ),
-                                        validator: (value) {
-                                          return null;
-                                        },
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(
                                     height: size.height / 20,
                                   ),
@@ -352,12 +336,13 @@ class _AddLeadsState extends State<AddLeads> {
                                             horizontal: 50),
                                         child: GestureDetector(
                                           onTap: () async {
+                                            if (!_formKey.currentState!
+                                                .validate()) return;
                                             setState(() {
                                               press = !press;
                                             });
                                             print(_nameController.text);
                                             print(_secMobController.text);
-                                            print(_rawDesController.text);
                                             print(_emailController.text);
                                             print(_phoneController.text);
                                             print(_descriptionController.text);
@@ -379,7 +364,8 @@ class _AddLeadsState extends State<AddLeads> {
                                                         _instructionController
                                                             .text,
                                                     raw_des:
-                                                        _rawDesController.text)
+                                                        _descriptionController
+                                                            .text)
                                                 .then((value) {
                                               var result = json.decode(value);
                                               if (result['status'] == 1) {
@@ -397,6 +383,10 @@ class _AddLeadsState extends State<AddLeads> {
                                                     .showSnackBar(snackBar);
                                               }
                                             });
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MyHomePage()));
                                           },
                                           child: Container(
                                             width: size.width / 1.5,

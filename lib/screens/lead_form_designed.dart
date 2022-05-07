@@ -16,6 +16,8 @@ import 'package:franchise/Networking/data.dart';
 import 'package:franchise/screens/notification_screen.dart';
 import 'package:franchise/utils/constants.dart';
 
+import 'home.dart';
+
 class LeadFormDesign extends StatefulWidget {
   Leads lead;
   LeadFormDesign({Key? key, required this.lead}) : super(key: key);
@@ -42,6 +44,7 @@ class _LeadFormDesignState extends State<LeadFormDesign> {
   @override
   void initState() {
     super.initState();
+    initializeFields();
   }
 
   final List<DropdownMenuItem> items = [];
@@ -51,14 +54,17 @@ class _LeadFormDesignState extends State<LeadFormDesign> {
   Color onPressColor = const Color(0xFFd00657).withOpacity(0.7);
   Color buttonColor = const Color(0xFFd00657);
 
-  @override
-  Widget build(BuildContext context) {
+  void initializeFields() {
     _nameController.text = widget.lead.name;
     _emailController.text = widget.lead.emailID;
     _phoneController.text = widget.lead.phoneNumber.toString();
     _secMobController.text = widget.lead.secNumber.toString();
     _descriptionController.text = widget.lead.rawDescription;
     _instructionController.text = widget.lead.instructions;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -154,6 +160,8 @@ class _LeadFormDesignState extends State<LeadFormDesign> {
                                             color: Colors.black, fontSize: 10),
                                       ),
                                       validator: (value) {
+                                        if (value!.isEmpty)
+                                          return 'Please Enter Your Name';
                                         return null;
                                       },
                                     ),
@@ -212,6 +220,8 @@ class _LeadFormDesignState extends State<LeadFormDesign> {
                                             color: Colors.black, fontSize: 10),
                                       ),
                                       validator: (value) {
+                                        if (value!.isEmpty)
+                                          return 'Please Enter Your Whatsapp Number';
                                         return null;
                                       },
                                     ),
@@ -272,6 +282,8 @@ class _LeadFormDesignState extends State<LeadFormDesign> {
                                             color: Colors.black, fontSize: 10),
                                       ),
                                       validator: (value) {
+                                        if (value!.isEmpty)
+                                          return 'Please Enter Your Requirements';
                                         return null;
                                       },
                                     ),
@@ -319,6 +331,8 @@ class _LeadFormDesignState extends State<LeadFormDesign> {
                                           horizontal: 50),
                                       child: GestureDetector(
                                         onTap: () async {
+                                          if (!_formKey.currentState!
+                                              .validate()) return;
                                           setState(() {
                                             press = !press;
                                           });
@@ -357,6 +371,10 @@ class _LeadFormDesignState extends State<LeadFormDesign> {
                                                   .showSnackBar(snackBar);
                                             }
                                           });
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MyHomePage()));
                                         },
                                         child: Container(
                                           width: size.width / 1.5,

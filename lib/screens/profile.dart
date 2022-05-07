@@ -198,6 +198,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: Container(),
           centerTitle: true,
           backgroundColor: Color(0xFFd00657),
           title: Text(
@@ -1688,6 +1689,9 @@ class _ProfileState extends State<Profile> {
                                             .showSnackBar(snackBar);
                                       });
                                       Navigator.of(context).pop();
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) => Profile()));
                                     },
                                   ))
                             ],

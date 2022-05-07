@@ -23,29 +23,37 @@ class LeadPage extends StatefulWidget {
 
 class _LeadPageState extends State<LeadPage> {
   String query = '';
-  // List<Leads> leads = Details;
+  List<Leads> searchResult = [];
   List<Leads> leadsFromErp = [];
+  List<Leads> allLeads = [];
   bool _isLoading = false;
 
   Widget buildSearch() => SearchWidget(
-      text: query,
-      onChanged: searchLead,
-      hintText: 'Search Leads by Name or Id');
+        text: query,
+        onChanged: searchLead,
+        hintText: 'Search Leads by Name or Lead Id',
+      );
 
   void searchLead(String query) {
     if (query == '') {
       setState(() {
-        this.leadsFromErp = Details;
+        this.leadsFromErp = allLeads;
       });
     }
     print(query);
-    final listLeads = leadsFromErp.where((element) {
+    final listLeads = allLeads.where((element) {
       final nameLower = element.name.toLowerCase();
       final leadName = query.toLowerCase();
-      final leadId = element.leadID.toLowerCase();
+      // final leadId = 'LEAD' + element.leadID.toLowerCase();
+      final leadId = 'lead' +
+          (element.leadID.length == 1
+              ? '0${element.leadID.toLowerCase()}'
+              : element.leadID.toLowerCase());
       final searchId = query.toLowerCase();
 
-      return nameLower.contains(leadName) || leadId.contains(searchId);
+      return nameLower.contains(leadName) ||
+          leadId.contains(searchId) ||
+          leadId == searchId;
     }).toList();
 
     setState(() {
@@ -81,6 +89,7 @@ class _LeadPageState extends State<LeadPage> {
           createdDate: lead['created_at'],
           updatedDate: lead['updated_at']));
     });
+    allLeads = leadsFromErp;
     setState(() {
       _isLoading = false;
     });

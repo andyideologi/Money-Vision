@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:franchise/Model/lead_data.dart';
 import 'package:franchise/Networking/api_calling.dart';
+import 'package:franchise/screens/home.dart';
 import 'package:franchise/screens/lead_form_designed.dart';
 import 'package:franchise/utils/constants.dart';
 import 'package:franchise/utils/details.dart';
@@ -46,6 +47,8 @@ class _CardDesignState extends State<CardDesign> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
                   });
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => MyHomePage()));
                 },
                 child: Text("Yes")),
             TextButton(
@@ -143,7 +146,17 @@ class _CardDesignState extends State<CardDesign> {
                 ],
               ),
             Text(
-              'Enter Detailed Service Requirements : ${this.widget.lead.rawDescription}',
+              "Detailed Service Requirements :",
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Text(
+              this.widget.lead.rawDescription,
               textAlign: TextAlign.left,
               style: const TextStyle(
                 color: Colors.grey,
@@ -156,7 +169,17 @@ class _CardDesignState extends State<CardDesign> {
               height: 10,
             ),
             Text(
-              "Enter Instructions, if any :${this.widget.lead.instructions}",
+              "Instructions, if any :",
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Text(
+              this.widget.lead.instructions,
               textAlign: TextAlign.left,
               style: const TextStyle(
                 color: Colors.grey,
