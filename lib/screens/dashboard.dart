@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:franchise/Model/circle_bg.dart';
 import 'package:franchise/Model/lead_data.dart';
 import 'package:franchise/Networking/api_calling.dart';
@@ -51,9 +52,12 @@ class _DashBoardState extends State<DashBoard> {
           createdDate: lead['created_at'],
           updatedDate: lead['updated_at']));
     });
-    print(leadsInfoMap);
-    print('************');
-    print(latestLeads);
+    // try {
+    //   print(await UniqueIdentifier.serial);
+    // } on PlatformException {
+    //   print('Failed to get Unique Identifier');
+    // }
+
     setState(() {
       _isLoading = false;
     });

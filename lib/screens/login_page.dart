@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print, deprecated_member_use, unused_local_variable, unused_field, unrelated_type_equality_checks, prefer_const_constructors_in_immutables, unnecessary_null_comparison, prefer_if_null_operators, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:franchise/Model/login_model.dart';
 import 'package:franchise/Networking/api_calling.dart';
 import 'package:franchise/Networking/data.dart';
@@ -10,6 +11,7 @@ import 'package:franchise/utils/constants.dart';
 import 'package:franchise/widgets/spinner.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:unique_identifier/unique_identifier.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -30,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   late LoginRequestModel object;
   bool isApiCallProcess = false;
   bool isModalProcess = true;
+  String imeiNumber = '';
 
   bool press = false;
   bool forpress = false;
@@ -370,9 +373,11 @@ class _LoginPageState extends State<LoginPage> {
                                   final SharedPreferences sharedPreferences =
                                       await SharedPreferences.getInstance();
                                   sharedPreferences.setBool("isLoggedIn", true);
-
+                                  print('after login data');
+                                  print('**************************');
                                   print(value.data);
                                   Data.setMap(value.data);
+                                  await apiService.firebaseToken();
 
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (_) {

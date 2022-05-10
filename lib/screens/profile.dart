@@ -494,18 +494,30 @@ class _ProfileState extends State<Profile> {
     showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-              title: Text("Profile Details"),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(bottom: 20),
+                        padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
-                          'Personal Details : ',
-                          style: TextStyle(fontSize: 18),
+                          'Personal Details :',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         )),
+                    const Divider(
+                      thickness: 3, // thickness of the line
+                      indent: 0, // empty space to the leading edge of divider.
+                      endIndent:
+                          0, // empty space to the trailing edge of the divider.
+                      color: Colors
+                          .black, // The color to use when painting the line.
+                      height: 10, // The divider's height extent.
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
                     Row(children: [
                       Expanded(
                           flex: 2,
@@ -565,6 +577,22 @@ class _ProfileState extends State<Profile> {
                               m[0]['sec_mobile'],
                             )),
                       ]),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 10, top: 20),
+                        child: Text(
+                          'Personal Info :',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        )),
+                    const Divider(
+                      thickness: 3, // thickness of the line
+                      indent: 0, // empty space to the leading edge of divider.
+                      endIndent:
+                          0, // empty space to the trailing edge of the divider.
+                      color: Colors
+                          .black, // The color to use when painting the line.
+                      height: 10, // The divider's height extent.
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
@@ -649,6 +677,22 @@ class _ProfileState extends State<Profile> {
                               m[0]['dob'],
                             )),
                       ]),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 10, top: 20),
+                        child: Text(
+                          'Location Info :',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        )),
+                    const Divider(
+                      thickness: 3, // thickness of the line
+                      indent: 0, // empty space to the leading edge of divider.
+                      endIndent:
+                          0, // empty space to the trailing edge of the divider.
+                      color: Colors
+                          .black, // The color to use when painting the line.
+                      height: 10, // The divider's height extent.
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
@@ -798,6 +842,22 @@ class _ProfileState extends State<Profile> {
                       ]),
                     ),
                     Padding(
+                        padding: EdgeInsets.only(bottom: 10, top: 20),
+                        child: Text(
+                          'Education Info :',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        )),
+                    const Divider(
+                      thickness: 3, // thickness of the line
+                      indent: 0, // empty space to the leading edge of divider.
+                      endIndent:
+                          0, // empty space to the trailing edge of the divider.
+                      color: Colors
+                          .black, // The color to use when painting the line.
+                      height: 10, // The divider's height extent.
+                    ),
+                    Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Row(children: [
                         Expanded(
@@ -821,11 +881,21 @@ class _ProfileState extends State<Profile> {
                       ]),
                     ),
                     Padding(
-                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
                           'Company Details : ',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         )),
+                    const Divider(
+                      thickness: 3, // thickness of the line
+                      indent: 0, // empty space to the leading edge of divider.
+                      endIndent:
+                          0, // empty space to the trailing edge of the divider.
+                      color: Colors
+                          .black, // The color to use when painting the line.
+                      height: 10, // The divider's height extent.
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Row(children: [
@@ -972,6 +1042,22 @@ class _ProfileState extends State<Profile> {
                               m[0]['joined_date'],
                             )),
                       ]),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 10, top: 20),
+                        child: Text(
+                          'Id Proof : ',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        )),
+                    const Divider(
+                      thickness: 3, // thickness of the line
+                      indent: 0, // empty space to the leading edge of divider.
+                      endIndent:
+                          0, // empty space to the trailing edge of the divider.
+                      color: Colors
+                          .black, // The color to use when painting the line.
+                      height: 10, // The divider's height extent.
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
@@ -1122,11 +1208,21 @@ class _ProfileState extends State<Profile> {
                       ]),
                     ),
                     Padding(
-                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
                           'Bank Details : ',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         )),
+                    const Divider(
+                      thickness: 3, // thickness of the line
+                      indent: 0, // empty space to the leading edge of divider.
+                      endIndent:
+                          0, // empty space to the trailing edge of the divider.
+                      color: Colors
+                          .black, // The color to use when painting the line.
+                      height: 10, // The divider's height extent.
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Row(children: [

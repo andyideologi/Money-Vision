@@ -70,7 +70,7 @@ class _CardDesignState extends State<CardDesign> {
           children: [
             Row(
               children: [
-                Text(this.widget.lead.name,
+                Text(this.widget.lead.name.toUpperCase(),
                     style: const TextStyle(
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w400,
@@ -200,66 +200,68 @@ class _CardDesignState extends State<CardDesign> {
                   ),
                 ),
                 Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    if (widget.lead.status == "OPEN") {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              LeadFormDesign(lead: widget.lead)));
-                    }
-                    press1 = !press1;
-                    setState(() {});
-                    Future.delayed(Duration(milliseconds: 200), () {
+                if (widget.lead.status == "OPEN")
+                  GestureDetector(
+                    onTap: () {
+                      if (widget.lead.status == "OPEN") {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                LeadFormDesign(lead: widget.lead)));
+                      }
                       press1 = !press1;
                       setState(() {});
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                        width: 35,
-                        height: 35,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: kButtonShadows,
-                            color: press1
-                                ? Colors.grey.withOpacity(0.5)
-                                : Colors.white),
-                        child: Icon(
-                          Icons.edit_outlined,
-                          color: Color(0xFFd00657),
-                          size: 20,
-                        )),
+                      Future.delayed(Duration(milliseconds: 200), () {
+                        press1 = !press1;
+                        setState(() {});
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: kButtonShadows,
+                              color: press1
+                                  ? Colors.grey.withOpacity(0.5)
+                                  : Colors.white),
+                          child: Icon(
+                            Icons.edit_outlined,
+                            color: Color(0xFFd00657),
+                            size: 20,
+                          )),
+                    ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    displayDialog();
-                    press2 = !press2;
-                    setState(() {});
-                    Future.delayed(Duration(milliseconds: 200), () {
+                if (widget.lead.status == "OPEN")
+                  GestureDetector(
+                    onTap: () {
+                      displayDialog();
                       press2 = !press2;
                       setState(() {});
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                        width: 35,
-                        height: 35,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: kButtonShadows,
-                            color: press2
-                                ? Colors.grey.withOpacity(0.5)
-                                : Colors.white),
-                        child: Icon(
-                          Icons.delete_outlined,
-                          color: Color(0xFFd00657),
-                          size: 20,
-                        )),
+                      Future.delayed(Duration(milliseconds: 200), () {
+                        press2 = !press2;
+                        setState(() {});
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: kButtonShadows,
+                              color: press2
+                                  ? Colors.grey.withOpacity(0.5)
+                                  : Colors.white),
+                          child: Icon(
+                            Icons.delete_outlined,
+                            color: Color(0xFFd00657),
+                            size: 20,
+                          )),
+                    ),
                   ),
-                ),
               ],
             ),
             Padding(

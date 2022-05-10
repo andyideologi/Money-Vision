@@ -43,51 +43,30 @@ class _ServicePageState extends State<ServicePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         // ignore: prefer_const_constructors
-        backgroundColor: const Color(0xFFd00657),
+        backgroundColor: Colors.white,
         body: SafeArea(
-          child: Container(
-            child: Column(
-              children: [
-                ClipPath(
-                  clipper: ArcClipper(),
-                  child: Container(
-                    width: double.infinity,
-                    height: 8,
-                    color: Colors.pink,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey.shade50, //Colors.green.shade100
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(40.0),
-                        topRight: Radius.circular(40.0),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        FutureBuilder<String>(
-                          future:
-                              call(), // a previously-obtained Future<String> or null
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
-                            List<Widget> children;
-                            if (snapshot.hasData) {
-                              return CustomDropDown(items: items);
-                            }
-                            return Center();
-                          },
-                        ),
-                      ],
-                    ),
+                  FutureBuilder<String>(
+                    future:
+                        call(), // a previously-obtained Future<String> or null
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      List<Widget> children;
+                      if (snapshot.hasData) {
+                        return CustomDropDown(items: items);
+                      }
+                      return Center();
+                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ));

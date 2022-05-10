@@ -3,9 +3,11 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:franchise/Model/login_model.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:unique_identifier/unique_identifier.dart';
 import 'data.dart';
 
 class NetWorking {
@@ -172,7 +174,7 @@ class NetWorking {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://fleenks.com/mv/api/fr-update-pass'));
     request.fields.addAll({
-      'id': '2',
+      'id': Data.map['id'].toString(),
       'curr_pass': curpass,
       'new_pass': newpass,
       'con_new_pass': conpass
@@ -228,6 +230,32 @@ class ApiService {
       return LoginResponseModel.fromJson(map);
     } else {
       throw "Error";
+    }
+  }
+
+  Future<String> firebaseToken() async {
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    String? token = await _firebaseMessaging.getToken();
+    String? imeiNumber = '';
+    try {
+      imeiNumber = await UniqueIdentifier.serial;
+    } on PlatformException {
+      print('Failed to get Unique Identifier');
+    }
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://fleenks.com/mv/api/fr-firebase-token'));
+    request.fields.addAll({
+      'token': token!,
+      'user_id': Data.map['id'].toString(),
+      'device_id': imeiNumber!
+    });
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return await response.stream.bytesToString();
+    } else {
+      return response.reasonPhrase.toString();
     }
   }
 }
