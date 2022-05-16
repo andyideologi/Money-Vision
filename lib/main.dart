@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:country_code_picker/country_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:franchise/screens/home.dart';
 import 'package:franchise/screens/logo_screen.dart';
@@ -12,6 +13,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   bool status = sharedPreferences.getBool("isLoggedIn") ?? false;
+  await Firebase.initializeApp();
   runApp(MyApp(whereToGo: status));
 }
 
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: whereToGo ? const LogoScreen() :  OnBoardingScreen(),
+      home: whereToGo ? const LogoScreen() : OnBoardingScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:franchise/Model/login_model.dart';
 import 'package:franchise/Networking/api_calling.dart';
@@ -38,6 +39,8 @@ class _LogoScreenState extends State<LogoScreen> {
       if (value.status == 1) {
         print(value.data);
         Data.setMap(value.data);
+
+        apiService.firebaseToken();
 
         Navigator.push(context, MaterialPageRoute(builder: (_) {
           return const MyHomePage();
