@@ -24,7 +24,7 @@ class _SpinnerPageState extends State<SpinnerPage> {
               height: size.height/3,
             ),
             CircleAvatar(
-              radius: 50,
+              radius: 100,
               backgroundImage: AssetImage(
                 "assets/images/moneyvisionImage.png",
               ),

@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:image/image.dart' as img;
+import 'package:webview_flutter/webview_flutter.dart';
 import '../Networking/api_calling.dart';
 import 'login_page.dart';
 
@@ -29,6 +30,7 @@ class _ProfileState extends State<Profile> {
   late List<dynamic> m;
   late String filespath;
   PickedFile? profileImage;
+  String joinedBy = '', relManager='';
   var _currencies = [
     "A+",
     "A-",
@@ -262,7 +264,9 @@ class _ProfileState extends State<Profile> {
                                 .getProfileDetails(Data.map['id'].toString())
                                 .then((value) {
                               Map<String, dynamic> data = jsonDecode(value);
-                              print(data.toString());
+                              print(data);
+                              joinedBy = (data['joined_by'][0]['name']).toString();
+                              relManager = (data['rel_mngr'][0]['name']).toString();
                               filespath = data['files_path'];
                               m = data['profile_obj'];
                               emailController.text = m[0]['pers_email'];
@@ -490,10 +494,20 @@ class _ProfileState extends State<Profile> {
   }
 
   void showProfileDetails() {
-    print(m.toString());
     showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("My Profile"),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: Icon(Icons.cancel)),
+                ],
+              ),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -515,69 +529,31 @@ class _ProfileState extends State<Profile> {
                           .black, // The color to use when painting the line.
                       height: 10, // The divider's height extent.
                     ),
-                    SizedBox(
-                      height: 5,
+                    Text(
+                      "Name :",
+                      style: TextStyle(color: Colors.grey, fontSize: 14.0),
                     ),
-                    Row(children: [
-                      Expanded(
-                          flex: 2,
-                          child: Text(
-                            "Name",
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: Center(
-                              child: Text(
-                            ":",
-                          ))),
-                      Expanded(
-                          flex: 4,
-                          child: Text(
-                            m[0]['name'].toString(),
-                          )),
-                    ]),
+                    Text(
+                      m[0]['name'].toString(),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "WhatsApp No.",
+                      child: Text(
+                              "WhatsApp No :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['whatsapp'].toString(),
-                            )),
-                      ]),
+
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Sec. Mobile",
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                      child:Text(
+                              "Secondary Mobile :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                            )), Text(
                               m[0]['sec_mobile'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
@@ -596,88 +572,40 @@ class _ProfileState extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Email",
+                      child: Text(
+                              "Email :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['pers_email'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Gender",
+                      child: Text(
+                              "Gender :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                       Text(
                               m[0]['gender'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Blood Group",
+                      child: Text(
+                              "Blood Group :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['blood_group'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "dob",
+                      child: Text(
+                              "Date of Birth :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['dob'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
@@ -696,151 +624,69 @@ class _ProfileState extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Location",
+                      child: Text(
+                              "Location :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['location'],
+                            ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                              "Village :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                      ]),
+                        Text(
+                              m[0]['village_name'].toString(),
+                            ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                              "Taluka :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                            )),
+                        Text(
+                              m[0]['taluka_name'].toString(),
+
+                            ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                              "District :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                            )),
+                        Text(
+                              m[0]['district_name'].toString(),
+
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Village",
+                      child: Text(
+                              "State :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['village'].toString(),
-                            )),
-                      ]),
+                        Text(
+                              m[0]['state_name'].toString(),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Taluka",
+                      child:Text(
+                              "Country :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['taluka'].toString(),
-                            )),
-                      ]),
+                        Text(
+                              m[0]['country_name'].toString(),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "District",
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['district'].toString(),
-                            )),
-                      ]),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "State",
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['state'].toString(),
-                            )),
-                      ]),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Country",
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['country'].toString(),
-                            )),
-                      ]),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Pincode",
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['pincode'].toString(),
-                            )),
-                      ]),
-                    ),
+                      child:Text(
+                              "Pincode :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                            ),),
+                        Text(
+                              m[0]['pincode_name'].toString(),
+                            ),
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
@@ -859,27 +705,15 @@ class _ProfileState extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Education",
+                      child: Text(
+                              "Education :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: (m[0]['education'] != null)
+                         (m[0]['education'] != null)
                                 ? Text(
                                     m[0]['education'],
                                   )
-                                : Text('')),
-                      ]),
-                    ),
+                                : Text(''),
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
@@ -898,155 +732,71 @@ class _ProfileState extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Source",
+                      child: Text(
+                              "Source :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                      Text(
                               m[0]['source'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Entity",
+                      child:Text(
+                              "Entity :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['entity'],
-                            )),
-                      ]),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Firm Name",
+                      child: Text(
+                              "Firm Name :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['firm_name'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
+                      child: Text(
                               "Office Email",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['office_email'],
+                            ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                              "Joined By :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                      ]),
+                       Text(
+                              joinedBy
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Joined By",
+                      child: Text(
+                              "Relationship Manager :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['joined_by'].toString(),
-                            )),
-                      ]),
-                    ),
+                        Text(
+                              relManager
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Relationship Manager",
+                      child: Text(
+                              "Joined Date :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['rel_mngr'].toString(),
-                            )),
-                      ]),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Joined Date",
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['joined_date'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
-                          'Id Proof : ',
+                          'KYC Details : ',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )),
@@ -1061,77 +811,53 @@ class _ProfileState extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Pan No.",
+                      child: Text(
+                              "PAN No :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: (m[0]['pan_file'] != null)
+                        (m[0]['pan_file'] != null)
                                 ? GestureDetector(
                                     onTap: () async {
-                                      String url = 'https://fleenks.com/mv/' +
-                                          filespath +
-                                          m[0]['pan_file'];
-                                      await launch(url);
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => WebViewContainer('https://fleenks.com/mv/' +
+                                              filespath +
+                                              m[0]['pan_file'])));
                                     },
                                     child: Text(
                                       m[0]['pan_no'],
                                     ))
                                 : Text(
-                                    m[0]['pan_no'],
-                                  )),
-                      ]),
+                                    m[0]['pan_no']
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Adhaar No.",
+                      child: Text(
+                              "AADHAR No :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: (m[0]['adhaar_file'] != null)
+                        (m[0]['adhaar_file'] != null)
                                 ? GestureDetector(
                                     onTap: () async {
-                                      String url = 'https://fleenks.com/mv/' +
-                                          filespath +
-                                          m[0]['adhaar_file'];
-                                      await launch(url);
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => WebViewContainer('https://fleenks.com/mv/' +
+                                                filespath +
+                                                m[0]['adhaar_file'])));
                                     },
                                     child: Text(
                                       m[0]['aadhar_no'],
                                     ))
                                 : Text(
                                     m[0]['adhaar_no'],
-                                  )),
-                      ]),
-                    ),
+                                  ),
                     (m[0]['agreement_file'] != null)
                         ? Padding(
                             padding: EdgeInsets.only(top: 10),
                             child: GestureDetector(
                               onTap: () async {
-                                String url = 'https://fleenks.com/mv/' +
-                                    filespath +
-                                    m[0]['agreement_file'];
-                                await launch(url);
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => WebViewContainer('https://fleenks.com/mv/' +
+                                        filespath +
+                                        m[0]['agreement_file'])));
                               },
                               child: Text('Agreement File'),
                             ))
@@ -1140,73 +866,51 @@ class _ProfileState extends State<Profile> {
                         padding: EdgeInsets.only(top: 10),
                         child: GestureDetector(
                           onTap: () async {
-                            String url = 'https://fleenks.com/mv/' +
-                                filespath +
-                                m[0]['kyc_photo'];
-                            await launch(url);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => WebViewContainer('https://fleenks.com/mv/' +
+                                    filespath +
+                                    m[0]['kyc_photo'])));
                           },
                           child: Text('KYC'),
                         )),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Id Proof",
+                      child:
+                       Text(
+                              "Id Proof :",
+                         style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: (m[0]['id_proof_name'] != null)
+                        (m[0]['id_proof_name'] != null)
                                 ? GestureDetector(
                                     onTap: () async {
-                                      String url = 'https://fleenks.com/mv/' +
-                                          filespath +
-                                          m[0]['id_proof_file'];
-                                      await launch(url);
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => WebViewContainer('https://fleenks.com/mv/' +
+                                              filespath +
+                                              m[0]['id_proof_file'])));
                                     },
                                     child: Text(
                                       m[0]['id_proof_name'],
                                     ))
-                                : Text('')),
-                      ]),
-                    ),
+                                : Text(''),
+
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Address Proof",
+                      child: Text(
+                              "Address Proof :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: (m[0]['address_proof_name'] != null)
+                        (m[0]['address_proof_name'] != null)
                                 ? GestureDetector(
                                     onTap: () async {
-                                      String url = 'https://fleenks.com/mv/' +
-                                          filespath +
-                                          m[0]['address_proof_file'];
-                                      await launch(url);
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => WebViewContainer('https://fleenks.com/mv/' +
+                                              filespath +
+                                              m[0]['address_proof_file'])));
                                     },
                                     child: Text(
                                       m[0]['address_proof_name'],
                                     ))
-                                : Text('')),
-                      ]),
-                    ),
+                                : Text(''),
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
@@ -1225,298 +929,148 @@ class _ProfileState extends State<Profile> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Account Number",
+                      child: Text(
+                              "Account Number :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['account_number'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Bank Name",
+                      child: Text(
+                              "Bank Name :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['bank_name'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "IFSC Code",
+                      child: Text(
+                              "IFSC Code :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                       Text(
                               m[0]['ifsc_code'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Branch",
+                      child: Text(
+                              "Branch :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['branch'],
-                            )),
-                      ]),
-                    ),
+                       Text(m[0]['branch'],),
+
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
+                      child:
+                        Text(
                               "UPI Id",
+                          style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['upi_id'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "UPI Mobile",
+                      child: Text(
+                              "UPI Mobile :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['upi_mobile'],
-                            )),
-                      ]),
+                            ),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 10, top: 20),
+                        child: Text(
+                          'Membership Details : ',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        )),
+                    const Divider(
+                      thickness: 3, // thickness of the line
+                      indent: 0, // empty space to the leading edge of divider.
+                      endIndent:
+                      0, // empty space to the trailing edge of the divider.
+                      color: Colors
+                          .black, // The color to use when painting the line.
+                      height: 10, // The divider's height extent.
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "CSP Type",
+                      child: Text(
+                              "CSP Type :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['csp_type'],
+                            ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                              "Registration Charges",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                      ]),
+                        Text(
+                              "\u{20B9}" + m[0]['reg_charges'],
+                            ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                              "Registration Charges Description :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                            )),
+                        Text(
+                          "\u{20B9}" + m[0]['reg_charges_desc'],
+
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Reg. Charges",
+                      child: Text(
+                              "Joining Fees :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['reg_charges'],
+                        Text(
+                          "\u{20B9}" + m[0]['joining_fees'],
+                            ),
+
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                              "Joining Fees Description",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                      ]),
+                        Text(
+                         m[0]['joining_fees_desc'],
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Reg. Charges Desc.",
+                      child: Text(
+                              "Security Deposit :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['reg_charges_desc'],
-                            )),
-                      ]),
-                    ),
+                        Text(
+                          "\u{20B9}" +     m[0]['sec_deposit'],
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Joining Fees",
+                      child: Text(
+                              "Security Deposit Description :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['joining_fees'],
-                            )),
-                      ]),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Joining Fees Desc.",
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['joining_fees_desc'],
-                            )),
-                      ]),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Sec. Deposit",
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
-                              m[0]['sec_deposit'],
-                            )),
-                      ]),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Sec. Deposit Desc.",
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                        Text(
                               m[0]['sec_deposit_desc'],
-                            )),
-                      ]),
-                    ),
+                            ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(children: [
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              "Created At",
+                      child: Text(
+                              "Created At :",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                                child: Text(
-                              ":",
-                            ))),
-                        Expanded(
-                            flex: 4,
-                            child: Text(
+                       Text(
                               m[0]['created_at'],
-                            )),
-                      ]),
-                    ),
+                            )
                   ],
                 ),
               ),
@@ -1800,5 +1354,33 @@ class _ProfileState extends State<Profile> {
     setState(() {
       profileImage = image;
     });
+  }
+
+
+}
+
+class WebViewContainer extends StatefulWidget {
+  final url;
+  WebViewContainer(this.url);
+  @override
+  createState() => _WebViewContainerState(this.url);
+}
+class _WebViewContainerState extends State<WebViewContainer> {
+  var _url;
+  final _key = UniqueKey();
+  _WebViewContainerState(this._url);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(),
+        body: Column(
+          children: [
+            Expanded(
+                child: WebView(
+                    key: _key,
+                    javascriptMode: JavascriptMode.unrestricted,
+                    initialUrl: _url))
+          ],
+        ));
   }
 }

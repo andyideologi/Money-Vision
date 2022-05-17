@@ -42,7 +42,20 @@ class _ServicePageState extends State<ServicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // ignore: prefer_const_constructors
+        appBar: AppBar(
+          elevation: 0,
+          centerTitle: true,
+          backgroundColor: const Color(0xFFd00657),
+          title: const Text(
+            'Services',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 30.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
         backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -53,6 +66,7 @@ class _ServicePageState extends State<ServicePage> {
                   SizedBox(
                     height: 20,
                   ),
+
                   FutureBuilder<String>(
                     future:
                         call(), // a previously-obtained Future<String> or null

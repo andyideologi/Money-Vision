@@ -36,6 +36,7 @@ class _DashBoardState extends State<DashBoard> {
     setState(() {
       _isLoading = true;
     });
+
     NetWorking netWorking = NetWorking(password: '', phoneNumber: '');
     var leadsInfo = await netWorking.dashboardLeads(Data.map['id'].toString());
     leadsInfoMap = json.decode(leadsInfo);
@@ -80,7 +81,7 @@ class _DashBoardState extends State<DashBoard> {
                     padding: EdgeInsets.all(16.0),
                     // ignore: prefer_const_constructors
                     child: Text(
-                      'Hi, Den!',
+                      'Hi, '+Data.map['name'],
                       style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 24,
@@ -147,7 +148,7 @@ class _DashBoardState extends State<DashBoard> {
                                   ),
                                   const Center(
                                     child: Text(
-                                      "How Much Should You Take?",
+                                      "Status wise lead counter",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,

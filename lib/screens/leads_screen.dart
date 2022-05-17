@@ -101,30 +101,6 @@ class _LeadPageState extends State<LeadPage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          // ignore: prefer_const_constructors
-          flexibleSpace: Align(
-            alignment: Alignment.bottomRight,
-            // ignore: prefer_const_constructors
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: CircleBackground(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return NotificationScreen();
-                  }));
-                },
-                widget: Icon(
-                  Icons.notifications_none,
-                  color: Color(0xFFd00657),
-                  size: 20,
-                ),
-                height1: 50,
-                height2: 40,
-                width1: 50,
-                width2: 40,
-              ),
-            ),
-          ),
           elevation: 0,
           centerTitle: true,
           backgroundColor: Color(0xFFd00657),

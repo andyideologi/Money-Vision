@@ -64,28 +64,6 @@ class _AddLeadsState extends State<AddLeads> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: EdgeInsets.only(right: 10, bottom: 5),
-            child: CircleBackground(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return NotificationScreen();
-                }));
-              },
-              widget: Icon(
-                Icons.notifications_none,
-                color: Color(0xFFd00657),
-                size: 20,
-              ),
-              height1: 50,
-              height2: 40,
-              width1: 50,
-              width2: 40,
-            ),
-          ),
-        ),
         elevation: 0,
         centerTitle: true,
         backgroundColor: const Color(0xFFd00657),

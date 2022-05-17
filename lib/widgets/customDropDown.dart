@@ -66,7 +66,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                         color: Colors.green.shade100),
                     child: ExpansionPanelList(
                       elevation: 0,
-                      dividerColor: Colors.transparent,
+                      dividerColor: Colors.white,
                       expansionCallback: (int indexi, bool isExpanded) {
                         setState(() {
                           item.body[indexi].isExpanded =
@@ -102,13 +102,16 @@ class _CustomDropDownState extends State<CustomDropDown> {
                                 ]),
                               );
                             },
-                            body: Container(
+                            body: Column(children: [
+                            Container(
                               padding: EdgeInsets.symmetric(horizontal: 50),
                               child: Text(
                                 element.body,
                                 style: TextStyle(color: Colors.indigo),
                               ),
-                            ));
+                            ),
+                            Divider(color: Colors.white,)
+                            ]));
                       }).toList(),
                     ),
                   ));
