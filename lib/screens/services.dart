@@ -66,7 +66,6 @@ class _ServicePageState extends State<ServicePage> {
                   SizedBox(
                     height: 20,
                   ),
-
                   FutureBuilder<String>(
                     future:
                         call(), // a previously-obtained Future<String> or null
@@ -98,9 +97,8 @@ class _ServicePageState extends State<ServicePage> {
             services: getListServices(ServiceCategoryItem)));
       });
 
-      List<ExpansionService> sers = [];
-
       categories.forEach((element) {
+        List<ExpansionService> sers = [];
         element.services.forEach((element) {
           ExpansionService expansionService = ExpansionService(
               header: element.service_name,
