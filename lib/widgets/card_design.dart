@@ -10,6 +10,7 @@ import 'package:franchise/screens/home.dart';
 import 'package:franchise/screens/lead_form_designed.dart';
 import 'package:franchise/utils/constants.dart';
 import 'package:franchise/utils/details.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CardDesign extends StatefulWidget {
   final Leads lead;
@@ -110,17 +111,44 @@ class _CardDesignState extends State<CardDesign> {
                     color: Color(0xFFd00657),
                   ),
                 ),
-                Text(
-                  this.widget.lead.phoneNumber.toString() +
-                      (this.widget.lead.secNumber.toString() == ''
-                          ? ''
-                          : '/${this.widget.lead.secNumber.toString()}'),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
+                GestureDetector(
+                    onTap: () async {
+                      String url =
+                          "tel:" + this.widget.lead.phoneNumber.toString();
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                    child: Text(
+                      this.widget.lead.phoneNumber.toString(),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w300,
+                      ),
+                    )),
+                (this.widget.lead.secNumber.toString() == '')
+                    ? Text('')
+                    : GestureDetector(
+                        onTap: () async {
+                          String url =
+                              "tel:" + this.widget.lead.secNumber.toString();
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
+                        child: Text(
+                          '/${this.widget.lead.secNumber.toString()}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w300,
+                          ),
+                        )),
                 Spacer(),
               ],
             ),
@@ -136,13 +164,25 @@ class _CardDesignState extends State<CardDesign> {
                       color: Color(0xFFd00657),
                     ),
                   ),
+                  GestureDetector(
+                      onTap: ()
+                      async{
+                        String uri =
+                            'mailto:' +  this.widget.lead.emailID;
+                        if (await canLaunch(uri)) {
+                        await launch(uri);
+                        } else {
+                        throw 'Could not launch $uri';
+                        }
+                      },
+                      child:
                   Text(
                     this.widget.lead.emailID,
                     style: const TextStyle(
                       fontSize: 14,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w300,
-                    ),
+                    ),)
                   ),
                 ],
               ),
@@ -150,7 +190,7 @@ class _CardDesignState extends State<CardDesign> {
               "Detailed Service Requirements :",
               textAlign: TextAlign.left,
               style: const TextStyle(
-                color: Colors.black,
+                color: Colors.grey,
                 fontSize: 12,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w700,
@@ -173,7 +213,7 @@ class _CardDesignState extends State<CardDesign> {
               "Instructions, if any :",
               textAlign: TextAlign.left,
               style: const TextStyle(
-                color: Colors.black,
+                color: Colors.grey,
                 fontSize: 12,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w700,

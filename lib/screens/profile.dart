@@ -30,6 +30,8 @@ class _ProfileState extends State<Profile> {
   late List<dynamic> m;
   late String filespath;
   PickedFile? profileImage;
+  String contactUs = 'http://www.moneyvision.co.in/Start/Contactus';
+  String aboutUs = 'http://www.moneyvision.co.in/Start/Aboutus';
   String joinedBy = '', relManager='';
   var _currencies = [
     "A+",
@@ -327,34 +329,13 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     children: [
                       TextButton.icon(
-                          style: ButtonStyle(
-                              shadowColor:
-                                  MaterialStateProperty.all(Colors.amberAccent),
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.transparent),
-                              foregroundColor:
-                                  MaterialStateProperty.all(Colors.black),
-                              overlayColor: MaterialStateProperty.all(
-                                  Colors.grey.withOpacity(0.5))),
-                          onPressed: () {},
-                          icon: Icon(Icons.info),
-                          label:
-                              Text('About us', style: TextStyle(fontSize: 17))),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Row(
-                    children: [
-                      TextButton.icon(
                         style: ButtonStyle(
                             shadowColor:
-                                MaterialStateProperty.all(Colors.amberAccent),
+                            MaterialStateProperty.all(Colors.amberAccent),
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
+                            MaterialStateProperty.all(Colors.transparent),
                             foregroundColor:
-                                MaterialStateProperty.all(Colors.black),
+                            MaterialStateProperty.all(Colors.black),
                             overlayColor: MaterialStateProperty.all(
                                 Colors.grey.withOpacity(0.5))),
                         onPressed: () {
@@ -374,21 +355,47 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     children: [
                       TextButton.icon(
+                          style: ButtonStyle(
+                              shadowColor:
+                                  MaterialStateProperty.all(Colors.amberAccent),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              overlayColor: MaterialStateProperty.all(
+                                  Colors.grey.withOpacity(0.5))),
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => WebViewContainer(aboutUs)));
+                          },
+                          icon: Icon(Icons.person),
+                          label:
+                              Text('About us', style: TextStyle(fontSize: 17))),
+                    ],
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
                         style: ButtonStyle(
                             shadowColor:
-                                MaterialStateProperty.all(Colors.amberAccent),
+                            MaterialStateProperty.all(Colors.amberAccent),
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
+                            MaterialStateProperty.all(Colors.transparent),
                             foregroundColor:
-                                MaterialStateProperty.all(Colors.black),
+                            MaterialStateProperty.all(Colors.black),
                             overlayColor: MaterialStateProperty.all(
                                 Colors.grey.withOpacity(0.5))),
                         onPressed: () {
-                          displayDialog(context);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => WebViewContainer(contactUs)));
                         },
-                        icon: Icon(Icons.login),
+                        icon: Icon(Icons.contact_support),
                         label: Text(
-                          'Logout',
+                          'Contact us',
                           style: TextStyle(fontSize: 17),
                         ),
                       ),
@@ -402,35 +409,11 @@ class _ProfileState extends State<Profile> {
                       TextButton.icon(
                         style: ButtonStyle(
                             shadowColor:
-                                MaterialStateProperty.all(Colors.amberAccent),
+                            MaterialStateProperty.all(Colors.amberAccent),
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
+                            MaterialStateProperty.all(Colors.transparent),
                             foregroundColor:
-                                MaterialStateProperty.all(Colors.black),
-                            overlayColor: MaterialStateProperty.all(
-                                Colors.grey.withOpacity(0.5))),
-                        onPressed: () {},
-                        icon: Icon(Icons.password),
-                        label: Text(
-                          'Check Password',
-                          style: TextStyle(fontSize: 17),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Row(
-                    children: [
-                      TextButton.icon(
-                        style: ButtonStyle(
-                            shadowColor:
-                                MaterialStateProperty.all(Colors.amberAccent),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                            foregroundColor:
-                                MaterialStateProperty.all(Colors.black),
+                            MaterialStateProperty.all(Colors.black),
                             overlayColor: MaterialStateProperty.all(
                                 Colors.grey.withOpacity(0.5))),
                         onPressed: () {},
@@ -457,10 +440,12 @@ class _ProfileState extends State<Profile> {
                                 MaterialStateProperty.all(Colors.black),
                             overlayColor: MaterialStateProperty.all(
                                 Colors.grey.withOpacity(0.5))),
-                        onPressed: () {},
-                        icon: Icon(Icons.contact_support),
+                        onPressed: () {
+                          displayDialog(context);
+                        },
+                        icon: Icon(Icons.login),
                         label: Text(
-                          'Contact us',
+                          'Logout',
                           style: TextStyle(fontSize: 17),
                         ),
                       ),

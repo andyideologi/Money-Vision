@@ -48,7 +48,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             child: Center(
               child: SafeArea(
                 child: Text(
-                  'Leads',
+                  'Money Vision',
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     color: const Color(0xFFd00657),
@@ -95,18 +95,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               _content[pageIndex].img,
                               fit: BoxFit.cover,
                               height: 200,
-                              color: const Color(0xFFd00657),
                             ),
                             SizedBox(
-                              child: FittedBox(
-                                fit: BoxFit.contain,
                                 child: Text(
                                   _content[index].message,
                                   style: poppinFonts(
                                       Colors.black, FontWeight.w500, 20),
                                   textAlign: TextAlign.center,
                                 ),
-                              ),
                             )
                           ],
                         ),
@@ -146,15 +142,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 }));
               },
               child: Container(
-                width: size.height / 4,
-                height: size.height / 20,
+                width: size.width / 1.5,
+                height: size.height / 15,
                 decoration: BoxDecoration(
                     color: press ? onPressColor : buttonColor,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: kBoxShadows),
                 child: Center(
                   child: Text(
-                    "Next",
+                    "Skip",
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: size.width / 22,

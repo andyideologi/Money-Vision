@@ -12,16 +12,16 @@ class Utils {
       OnBoardModel(
         title: "Lorem Ispum",
           message:
-              "Lorem ipsum dolor sit amet",
-          img: "assets/images/lead.png"),
+              "Welcome Franchise owner",
+          img: "assets/images/moneyvisionImage.png"),
       OnBoardModel(
         title: "Lorem ispum",
-          message: "Lorem ipsum dolor sit amet", 
-          img: "assets/images/lead.png"),
+          message: "You can manage leads, check money vision services and can manage your own profile, with the help of this application",
+          img: "assets/images/moneyvisionImage.png"),
       OnBoardModel(
           title: "Lorem ispum",
-          message: "Lorem ipsum dolor sit amet", 
-          img: "assets/images/lead.png")
+          message: "For more details please contact +91999999999",
+          img: "assets/images/moneyvisionImage.png")
     ];
   }
 }

@@ -231,22 +231,22 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           elevation: 0.0,
-          title: Hero(
-            tag: "lead",
-            child: Text(
-              "Leads",
-              style: poppinFonts(const Color(0xFFd00657), FontWeight.w700, 45),
-            ),
-          ),
         ),
         backgroundColor: Colors.white.withOpacity(0.95),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(50),
+            padding: const EdgeInsets.fromLTRB(50, 10, 50, 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Center(child:
+               CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage(
+                      "assets/images/moneyvisionImage.png",
+                    ),
+                  )),
                 SizedBox(
                   height: size.height / 11,
                 ),

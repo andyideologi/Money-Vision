@@ -29,7 +29,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveWidget(
+    return Scaffold(body:
+      ResponsiveWidget(
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -69,6 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         builder: (context, constraints) {
           return _options.elementAt(_selectedIndex);
-        });
+        }));
   }
 }

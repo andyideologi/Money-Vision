@@ -79,6 +79,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                         });
                       },
                       children: item.body.map((ExpansionService element) {
+                        print(item.header.toString());
                         return ExpansionPanel(
                             backgroundColor: Colors.transparent,
                             isExpanded: element.isExpanded,

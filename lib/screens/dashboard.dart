@@ -66,7 +66,8 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Scaffold(body:
+      SingleChildScrollView(
       physics: PageScrollPhysics(),
       child: Column(
         children: [
@@ -377,6 +378,6 @@ class _DashBoardState extends State<DashBoard> {
                 ),
         ],
       ),
-    );
+    ));
   }
 }
