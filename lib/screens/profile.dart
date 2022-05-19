@@ -453,7 +453,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 10,
                 ),
                 TextButton(
                     style: ButtonStyle(
@@ -471,7 +471,21 @@ class _ProfileState extends State<Profile> {
                     child: Text(
                       "Visit our Website",
                       style: poppinFonts(Colors.black, FontWeight.normal, 15),
-                    ))
+                    )),
+                Padding(padding: EdgeInsets.only(top: 20),child:
+                Text(
+                  "Copyright \u00a9 2022 Developed by",
+                  style: poppinFonts(Colors.black, FontWeight.normal, 15),
+                )),
+                Text(
+                  "Ideate Systems India Pvt Ltd",
+                  style: poppinFonts(Colors.blue, FontWeight.normal, 15),
+                ),
+                Padding(padding: EdgeInsets.only(bottom: 20),child:
+                Text(
+                  "All Rights Reserved",
+                  style: poppinFonts(Colors.black, FontWeight.normal, 15),
+                )),
               ],
             ),
           ),
