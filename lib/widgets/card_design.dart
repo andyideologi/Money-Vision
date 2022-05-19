@@ -73,7 +73,7 @@ class _CardDesignState extends State<CardDesign> {
               children: [
                 Text(this.widget.lead.name.toUpperCase(),
                     style: const TextStyle(
-                      color: Colors.grey,
+                      color: Colors.black,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.bold,
                       fontSize: 18,

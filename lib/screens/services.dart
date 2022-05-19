@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:franchise/Model/ServiceCategory.dart';
+import 'package:franchise/screens/dashboard.dart';
 import 'package:franchise/screens/home.dart';
 import 'package:franchise/screens/login_page.dart';
 import 'package:franchise/utils/constants.dart';
@@ -33,7 +34,7 @@ class _ServicePageState extends State<ServicePage> {
     List<Service> services = [];
     ServiceCategoryItem['services'].forEach((service) {
       services.add(Service(
-          service_name: service['services_name'],
+          service_name: service['sub_category_name'] + ' : ' +service['services_name'],
           service_description: service['service_description']));
     });
     return services;
@@ -47,7 +48,7 @@ class _ServicePageState extends State<ServicePage> {
           centerTitle: true,
           backgroundColor: const Color(0xFFd00657),
           title: const Text(
-            'Services',
+            'All Services',
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,
@@ -88,7 +89,7 @@ class _ServicePageState extends State<ServicePage> {
   Future<String> call() async {
     NetWorking object = NetWorking(password: '', phoneNumber: '');
     await object.getServices().then((value) {
-      print(value.toString());
+      print('amey ' + value.toString());
       Map valueMap = jsonDecode(value);
       List<dynamic> parsedListJson = valueMap['services_obj'];
       parsedListJson.forEach((ServiceCategoryItem) {
@@ -111,7 +112,6 @@ class _ServicePageState extends State<ServicePage> {
         items.add(expansionItem);
       });
     });
-
     return 'test';
   }
 }

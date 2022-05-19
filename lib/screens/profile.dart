@@ -370,7 +370,7 @@ class _ProfileState extends State<Profile> {
                           },
                           icon: Icon(Icons.person),
                           label:
-                              Text('About us', style: TextStyle(fontSize: 17))),
+                              Text('About Us', style: TextStyle(fontSize: 17))),
                     ],
                   ),
                 ),
@@ -395,7 +395,7 @@ class _ProfileState extends State<Profile> {
                         },
                         icon: Icon(Icons.contact_support),
                         label: Text(
-                          'Contact us',
+                          'Contact Us',
                           style: TextStyle(fontSize: 17),
                         ),
                       ),
@@ -419,7 +419,7 @@ class _ProfileState extends State<Profile> {
                         onPressed: () {},
                         icon: Icon(Icons.share),
                         label: Text(
-                          'Share our App',
+                          'Share The App',
                           style: TextStyle(fontSize: 17),
                         ),
                       ),
@@ -542,7 +542,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
-                          'Personal Info :',
+                          'Personal Details :',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )),
@@ -594,7 +594,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
-                          'Location Info :',
+                          'Location Details :',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )),
@@ -675,7 +675,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
-                          'Education Info :',
+                          'Education Details :',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )),
@@ -702,7 +702,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 20),
                         child: Text(
-                          'Company Details : ',
+                          'Organization Details : ',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )),

@@ -242,13 +242,13 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Center(child:
                CircleAvatar(
-                    radius: 50,
+                    radius: 75,
                     backgroundImage: AssetImage(
                       "assets/images/moneyvisionImage.png",
                     ),
                   )),
                 SizedBox(
-                  height: size.height / 11,
+                  height: size.height / 20,
                 ),
                 Text(
                   "Hi,",

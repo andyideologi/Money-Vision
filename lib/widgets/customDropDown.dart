@@ -86,7 +86,6 @@ class _CustomDropDownState extends State<CustomDropDown> {
                             headerBuilder:
                                 (BuildContext context, bool isExpanded) {
                               return Container(
-                                margin: EdgeInsets.symmetric(horizontal: 25),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -98,17 +97,19 @@ class _CustomDropDownState extends State<CustomDropDown> {
                                   Text(
                                     element.header,
                                     style: poppinFonts(
-                                        Colors.black, FontWeight.normal, 15),
+                                        Colors.black, FontWeight.normal, 14),
                                   ),
                                 ]),
                               );
                             },
                             body: Column(children: [
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 50),
+                              color: Colors.white,
+                              margin: EdgeInsets.fromLTRB(27, 0, 27, 0),
+                              padding: EdgeInsets.all(27),
                               child: Text(
                                 element.body,
-                                style: TextStyle(color: Colors.indigo),
+                                style: TextStyle(color: Colors.grey),
                               ),
                             ),
                             Divider(color: Colors.white,)

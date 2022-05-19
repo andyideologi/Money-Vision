@@ -149,7 +149,7 @@ class _DashBoardState extends State<DashBoard> {
                                   ),
                                   const Center(
                                     child: Text(
-                                      "Status wise lead counter",
+                                      "Status Wise Lead Counters",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,

@@ -106,7 +106,7 @@ class _LeadPageState extends State<LeadPage> {
           centerTitle: true,
           backgroundColor: Color(0xFFd00657),
           title: Text(
-            'Leads',
+            'All Leads',
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,
