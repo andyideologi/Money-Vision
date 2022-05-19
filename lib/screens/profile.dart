@@ -200,6 +200,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    String year = DateTime.now().year.toString();
     return Scaffold(
         appBar: AppBar(
           leading: Container(),
@@ -455,35 +456,39 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   height: 10,
                 ),
-                TextButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.transparent),
-                        overlayColor:
-                            MaterialStateProperty.all(Colors.transparent),
-                        shadowColor:
-                            MaterialStateProperty.all(Colors.transparent),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.transparent)),
-                    onPressed: () async {
-                      launch("https://www.google.com");
-                    },
-                    child: Text(
-                      "Visit our Website",
-                      style: poppinFonts(Colors.black, FontWeight.normal, 15),
-                    )),
                 Padding(padding: EdgeInsets.only(top: 20),child:
+                Center(child:
+                CircleAvatar(
+                  radius: 20,
+                  backgroundImage: AssetImage(
+                    "assets/images/moneyvisionImage.png",
+                  ),
+                ))),
+
+                Padding(padding: EdgeInsets.only(top: 10), child:
                 Text(
-                  "Copyright \u00a9 2022 Developed by",
+                  "Copyright \u00a9 $year",
                   style: poppinFonts(Colors.black, FontWeight.normal, 15),
                 )),
-                Text(
+            Text(
+              "Developed by",
+              style: poppinFonts(Colors.black, FontWeight.normal, 15),
+            ),
+                TextButton(
+                  onPressed: () async{
+                    if (await canLaunch('https://www.ideatesystemsindia.com/'))
+                    await launch('https://www.ideatesystemsindia.com/');
+                    else
+                    // can't launch url, there is some error
+                    throw "Could not launch";
+                  },
+                child: Text(
                   "Ideate Systems India Pvt Ltd",
                   style: poppinFonts(Colors.blue, FontWeight.normal, 15),
-                ),
+                )),
                 Padding(padding: EdgeInsets.only(bottom: 20),child:
                 Text(
-                  "All Rights Reserved",
+                  "All Rights Reserved.",
                   style: poppinFonts(Colors.black, FontWeight.normal, 15),
                 )),
               ],
@@ -553,22 +558,6 @@ class _ProfileState extends State<Profile> {
                             )), Text(
                               m[0]['sec_mobile'],
                             ),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 10, top: 20),
-                        child: Text(
-                          'Personal Details :',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        )),
-                    const Divider(
-                      thickness: 3, // thickness of the line
-                      indent: 0, // empty space to the leading edge of divider.
-                      endIndent:
-                          0, // empty space to the trailing edge of the divider.
-                      color: Colors
-                          .black, // The color to use when painting the line.
-                      height: 10, // The divider's height extent.
-                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Text(
