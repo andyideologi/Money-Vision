@@ -15,6 +15,8 @@ import 'package:franchise/utils/details.dart';
 import 'package:franchise/widgets/SearchWidget.dart';
 import 'package:franchise/widgets/card_design.dart';
 
+import '../widgets/card_design2.dart';
+
 class LeadPage extends StatefulWidget {
   LeadPage({Key? key}) : super(key: key);
 
@@ -146,7 +148,7 @@ class _LeadPageState extends State<LeadPage> {
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Container(
-                          child: CardDesign(
+                          child: CardDesign2(
                             lead: leadsFromErp[index],
                           ),
                         );

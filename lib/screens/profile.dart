@@ -459,7 +459,7 @@ class _ProfileState extends State<Profile> {
                 Padding(padding: EdgeInsets.only(top: 20),child:
                 Center(child:
                 CircleAvatar(
-                  radius: 20,
+                  radius: 80,
                   backgroundImage: AssetImage(
                     "assets/images/moneyvisionImage.png",
                   ),
@@ -489,6 +489,11 @@ class _ProfileState extends State<Profile> {
                 Padding(padding: EdgeInsets.only(bottom: 20),child:
                 Text(
                   "All Rights Reserved.",
+                  style: poppinFonts(Colors.black, FontWeight.normal, 15),
+                )),
+                Padding(padding: EdgeInsets.only(bottom: 20),child:
+                Text(
+                  "Version 1.0",
                   style: poppinFonts(Colors.black, FontWeight.normal, 15),
                 )),
               ],
@@ -813,6 +818,7 @@ class _ProfileState extends State<Profile> {
                                     },
                                     child: Text(
                                       m[0]['pan_no'],
+                                      style: TextStyle(color: Colors.blue),
                                     ))
                                 : Text(
                                     m[0]['pan_no']
@@ -833,6 +839,7 @@ class _ProfileState extends State<Profile> {
                                     },
                                     child: Text(
                                       m[0]['aadhar_no'],
+                                      style: TextStyle(color: Colors.blue),
                                     ))
                                 : Text(
                                     m[0]['adhaar_no'],
@@ -847,7 +854,7 @@ class _ProfileState extends State<Profile> {
                                         filespath +
                                         m[0]['agreement_file'])));
                               },
-                              child: Text('Agreement File'),
+                              child: Text('Agreement File', style: TextStyle(color: Colors.blue),),
                             ))
                         : Text(''),
                     Padding(
@@ -859,7 +866,7 @@ class _ProfileState extends State<Profile> {
                                     filespath +
                                     m[0]['kyc_photo'])));
                           },
-                          child: Text('KYC'),
+                          child: Text('KYC', style: TextStyle(color: Colors.blue),),
                         )),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
@@ -878,6 +885,7 @@ class _ProfileState extends State<Profile> {
                                     },
                                     child: Text(
                                       m[0]['id_proof_name'],
+                                      style: TextStyle(color: Colors.blue),
                                     ))
                                 : Text(''),
 
@@ -897,6 +905,7 @@ class _ProfileState extends State<Profile> {
                                     },
                                     child: Text(
                                       m[0]['address_proof_name'],
+                                      style: TextStyle(color: Colors.blue),
                                     ))
                                 : Text(''),
                     Padding(
@@ -1170,70 +1179,6 @@ class _ProfileState extends State<Profile> {
                                       setState(() {});
                                     },
                                   ),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 15.0, top: 8),
-                                    child: Text(
-                                      'Selected Blood Group',
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15.0, bottom: 15.0),
-                                child: FormField<String>(
-                                  builder: (FormFieldState<String> state) {
-                                    return InputDecorator(
-                                      decoration: InputDecoration(
-                                        // labelStyle: textStyle,
-                                        errorStyle: TextStyle(
-                                            color: Colors.redAccent,
-                                            fontSize: 12.0),
-                                        hintText: 'Blood Group',
-                                      ),
-                                      isEmpty: _currentSelectedValue == '',
-                                      child: DropdownButtonHideUnderline(
-                                        child: DropdownButton<String>(
-                                          value: _currentSelectedValue,
-                                          isDense: true,
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              _currentSelectedValue = newValue!;
-                                              state.didChange(newValue);
-                                            });
-                                          },
-                                          items:
-                                              _currencies.map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    boxShadow: kBoxShadows),
-                                child: CircleAvatar(
-                                  radius: 80.0,
-                                  backgroundImage: profileImage == null
-                                      ? NetworkImage("https://fleenks.com/mv/" +
-                                          Data.map['photo_path'].toString())
-                                      : FileImage(File(profileImage!.path))
-                                          as ImageProvider,
                                 ),
                               ),
                               GestureDetector(
