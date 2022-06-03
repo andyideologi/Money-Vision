@@ -24,6 +24,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
               color: Color(0xFFd00657) // green as background color
               ),
           child: ExpansionPanelList(
+            expandedHeaderPadding: EdgeInsets.only(top: 0),
             elevation: 0,
             dividerColor: Colors.white,
             expansionCallback: (int index, bool isExpanded) {
@@ -39,6 +40,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
             },
             children: widget.items.map((ExpansionItem item) {
               return ExpansionPanel(
+                  canTapOnHeader: true,
                   backgroundColor: Colors.transparent,
                   isExpanded: item.isExpanded,
                   headerBuilder: (BuildContext context, bool isExpanded) {
@@ -48,12 +50,14 @@ class _CustomDropDownState extends State<CustomDropDown> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       padding: EdgeInsets.all(8),
-                      child: Row(children: [
+                      child: Row(mainAxisSize: MainAxisSize.min, children: [
                         SizedBox(
                           width: 20,
                         ),
                         Text(
                           item.header,
+                          softWrap: true,
+                          maxLines: null,
                           style: poppinFonts(Colors.white, FontWeight.bold, 15),
                         ),
                       ]),
@@ -65,6 +69,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                         borderRadius: BorderRadius.circular(8),
                         color: Colors.green.shade100),
                     child: ExpansionPanelList(
+                      expandedHeaderPadding: EdgeInsets.only(top: 0),
                       elevation: 0,
                       dividerColor: Colors.white,
                       expansionCallback: (int indexi, bool isExpanded) {
@@ -81,6 +86,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                       children: item.body.map((ExpansionService element) {
                         print(item.header.toString());
                         return ExpansionPanel(
+                            canTapOnHeader: true,
                             backgroundColor: Colors.transparent,
                             isExpanded: element.isExpanded,
                             headerBuilder:
@@ -90,29 +96,34 @@ class _CustomDropDownState extends State<CustomDropDown> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 padding: EdgeInsets.all(8),
-                                child: Row(children: [
-                                  // SizedBox(
-                                  //   width: 20,
-                                  // ),
-                                  Text(
-                                    element.header,
-                                    style: poppinFonts(
-                                        Colors.black, FontWeight.normal, 12),
-                                  ),
-                                ]),
+                                child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        element.header,
+                                        softWrap: true,
+                                        maxLines: null,
+                                        style: poppinFonts(Colors.black,
+                                            FontWeight.normal, 12),
+                                      ),
+                                    ]),
                               );
                             },
                             body: Column(children: [
-                            Container(
-                              color: Colors.white,
-                              // margin: EdgeInsets.fromLTRB(27, 0, 27, 0),
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                element.body,
-                                style: TextStyle(color: Colors.grey),
+                              Container(
+                                color: Colors.white,
+                                // margin: EdgeInsets.fromLTRB(27, 0, 27, 0),
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  element.body,
+                                  softWrap: true,
+                                  maxLines: null,
+                                  style: TextStyle(color: Colors.grey),
+                                ),
                               ),
-                            ),
-                            Divider(color: Colors.white,)
+                              Divider(
+                                color: Colors.white,
+                              )
                             ]));
                       }).toList(),
                     ),
