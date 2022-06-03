@@ -60,7 +60,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                     );
                   },
                   body: Container(
-                    margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: Colors.green.shade100),
@@ -91,13 +91,13 @@ class _CustomDropDownState extends State<CustomDropDown> {
                                 ),
                                 padding: EdgeInsets.all(8),
                                 child: Row(children: [
-                                  SizedBox(
-                                    width: 20,
-                                  ),
+                                  // SizedBox(
+                                  //   width: 20,
+                                  // ),
                                   Text(
                                     element.header,
                                     style: poppinFonts(
-                                        Colors.black, FontWeight.normal, 14),
+                                        Colors.black, FontWeight.normal, 12),
                                   ),
                                 ]),
                               );
@@ -105,8 +105,8 @@ class _CustomDropDownState extends State<CustomDropDown> {
                             body: Column(children: [
                             Container(
                               color: Colors.white,
-                              margin: EdgeInsets.fromLTRB(27, 0, 27, 0),
-                              padding: EdgeInsets.all(27),
+                              // margin: EdgeInsets.fromLTRB(27, 0, 27, 0),
+                              padding: EdgeInsets.all(5),
                               child: Text(
                                 element.body,
                                 style: TextStyle(color: Colors.grey),

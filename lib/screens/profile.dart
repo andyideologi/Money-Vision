@@ -820,6 +820,7 @@ class _ProfileState extends State<Profile> {
                                       m[0]['pan_no'],
                                       style: TextStyle(color: Colors.blue),
                                     ))
+
                                 : Text(
                                     m[0]['pan_no']
                     ),
